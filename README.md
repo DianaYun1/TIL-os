@@ -1,5 +1,16 @@
 # Today I Learned(TIL)
-## [GIT](https://github.com/Belluable/TIL/blob/master/git.md)
+## [Git](https://github.com/Belluable/TIL/blob/master/git.md)
 - Git
 - CLI
 - Markdown
+\n
+
+## Python
+
+## Algorithm
+
+## Django
+
+## DB
+
+## Javascript

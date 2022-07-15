@@ -24,8 +24,9 @@
 - Local Repository: 컴퓨터
 - Remote Repository: gitlab, github
 
-|  | .git 파일 | 버전 관리에 필요한 모든 것이 들어있음 |  |
+|      | 코드                                  | 설명                                                         | 추가 설명/ 상태                             |
 | --- | --- | --- | --- |
+|  | .git 파일 | 버전 관리에 필요한 모든 것이 들어있음 |  |
 | 0 | git init | 로컬 저장소 생성 |  |
 | 1 | git status | 현재 git으로 관리되고 있는 파일들의 상태 |  |
 | 2 | git add | 변경사항을 working directory → repository | untracked 상태 |
@@ -73,8 +74,9 @@
     - 상대경로: 현재 있는 위치 기준으로 상대적 위치 작성
         - Users로 가려면, 절대경로 - cd  C:\Users 입력 | 상대경로 - cd ../.. 입력
     
-    | touch | 파일 생성 |
+    | 코드        | 설명                                                    |
     | --- | --- |
+    | touch | 파일 생성 |
     | Mkdir | 새폴더 생성 |
     | ls | 현재 작업 중인 디렉토리 폴더/파일 목록 보여줌 |
     | cd | 현재 작업 중인 디렉토리 변경 |
@@ -95,8 +97,9 @@
     - 실시간 마크다운 변환
     - [https://www.markdownguide.org/cheat-sheet/](https://www.markdownguide.org/cheat-sheet/)
     
-    | # | 헤딩 h1~h6: 제목, 소제목 |  |
+    | 코드               | 설명                                                         |                               |
     | --- | --- | --- |
+    | # | 헤딩 h1~h6: 제목, 소제목 |  |
     | 1.2.3. / *,- | 리스트(순서 있/없) |  |
     | `/` | 인라인 코드블럭: `1개/ 문장 안에 코드가 print("hello") 들어갈때 |  |
     | ```/``` | 일반 코드블럭: `3개/ 큰 블럭이 생김 or 언어까지 한번에도 가능 |```python... 엔터 print("~~")|
