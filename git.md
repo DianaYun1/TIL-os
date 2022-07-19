@@ -1,11 +1,8 @@
-# Git 0714-
-
-## Git ⭐
+## Git 🤩
 
 - 분산 버전 관리 프로그램
 - 최종 파일 1개 + 변경사항만 저장한 파일 여러개
 - 하나 터져도 복구 가능
-- 협업이 목적
 - TIL(Today I Learned): 오늘 배운 내용 정리
     - 마크다운으로 정리
 
@@ -27,7 +24,7 @@
 - Local Repository: 컴퓨터
 - Remote Repository: gitlab, github
 
-|  | 코드 | 설명 | 추가설명/ 상태 |
+|      | 코드                                  | 설명                                                         | 추가 설명/ 상태                             |
 | --- | --- | --- | --- |
 |  | .git 파일 | 버전 관리에 필요한 모든 것이 들어있음 |  |
 | 0 | git init | 로컬 저장소 생성 |  |
@@ -37,7 +34,6 @@
 | 3 | git commit -m “수정함” | staging area → repository | tracked 상태 |
 | - | repository → working directory | 가장 최신 commit이랑 현재 파일 비교 |  |
 |  | :q | quit |  |
-|  | :wq | write & quit 저장하고 나가기 |  |
 | 4 | git log | 커밋한 정보 알려줌 |  |
 |  | git diff A B | A에 비해서 B가 어떻게 바꼈는가 | A, B에 git log 쳐서 나온 커밋 앞 4자리 입력 |
 | 1 | git remote add origin {remote_repo} | origin: <repo_name> 별명, 대체로 origin 씀/ remote_repo: github 주소 url | github 연결 |
@@ -46,28 +42,12 @@
 | 4 | git clone {remote_repo} | github 복제 |  |
 |  | code . | 파일 코드로 열기 |  |
 - 실습
+  
+    master 지우기: rm -rf .git
     
-    ```jsx
-    git config --global user.name "Belluable"
-    git config --global user.email ""
+    ![1.png](0714-15%20Start%20Camp%2023a6059c5ed5494f9eaa09adf78971ae/1.png)
     
-    git status  # 수정 사항 있는지 확인
-    git add .   # 바뀐부분 업데이트
-    git commit -m "오타 수정"   # commit
-    git push   # git에 업로드
-    git log    # 여태까지 작업한 내역 확인
-    git pull   # 가져오기
-    
-    rm -rf .git  # master 지우기
-    ```
-    
-    ![1.png](Git%200714-%2023a6059c5ed5494f9eaa09adf78971ae/1.png)
-    
-    ![Untitled](Git%200714-%2023a6059c5ed5494f9eaa09adf78971ae/Untitled.png)
-    
-- 자격 증명 지우기
-    
-    제어판> 자격 증명 관리> window 자격 증명> 일반 자격 증명> 지울 사이트 제거
+    ![Untitled](0714-15%20Start%20Camp%2023a6059c5ed5494f9eaa09adf78971ae/Untitled.png)
     
 
 ## Gitlab/Github/Bitbucket
@@ -78,7 +58,7 @@
     - gitlab: 저장하는 서버 자체를 구축 가능 → 삼성 서버로 저장됨  ex)잔디, 슬랙
 - github: 공개적 social coding, code sns, 남에게 나를 표출 - 개발자 직무에 대한 성실함, 열정, 능력
 - github 관리 ⭐
-    
+  
     
 
 ## CLI ↔ GUI
@@ -94,7 +74,7 @@
     - 상대경로: 현재 있는 위치 기준으로 상대적 위치 작성
         - Users로 가려면, 절대경로 - cd  C:\Users 입력 | 상대경로 - cd ../.. 입력
     
-    | 코드 | 설명 |
+    | 코드        | 설명                                                    |
     | --- | --- |
     | touch | 파일 생성 |
     | Mkdir | 새폴더 생성 |
@@ -117,13 +97,13 @@
     - 실시간 마크다운 변환
     - [https://www.markdownguide.org/cheat-sheet/](https://www.markdownguide.org/cheat-sheet/)
     
-    | 코드 | 설명 |  |
+    | 코드               | 설명                                                         |                               |
     | --- | --- | --- |
     | # | 헤딩 h1~h6: 제목, 소제목 |  |
     | 1.2.3. / *,- | 리스트(순서 있/없) |  |
-    | `/` | 인라인 코드블럭: 문장 안에 코드가 print("hello") 들어갈때  |  |
-    | ```/``` | 일반 코드블럭: ```치면 큰 블럭이 생김 or 아래처럼 한번에도 가능 | ```python... 엔터 print("~~") |
+    | `/` | 인라인 코드블럭: `1개/ 문장 안에 코드가 print("hello") 들어갈때 |  |
+    | ```/``` | 일반 코드블럭: `3개/ 큰 블럭이 생김 or 언어까지 한번에도 가능 |```python... 엔터 print("~~")|
     | [string](url) | 링크 |  |
     | ![string](img_url) | 이미지 링크 |  |
-    | **/** */* ~~/~~ | 텍스트 강조 *2개: bold *1개: italic ~2개: strikeout |  |
+    | **/** */* ~~/~~ | 텍스트 강조: *2개: bold/ *1개: italic/ ~2개: strikeout |  |
     | --- | 수평선 -3개 이상 / -(hypen) |  |
