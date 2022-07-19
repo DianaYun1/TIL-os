@@ -2,7 +2,7 @@
 
 - 기타
     
-    ![api](/Users/song-yuojin/Desktop/SSAFY/Python/Python.png)
+    ![api](Python/API.png)
     
     API: 기능 ex) url끝에 원하는 값 알려줘
     
@@ -123,6 +123,7 @@
 - ex. List
 - Ordered/ Unordered
 - 순서가 있다 ≠ 정렬되어 있다
+- list>dict>range>tuple>set
 - 시퀀스형(ordered)
     - 리스트
         - [], list()
@@ -137,18 +138,19 @@
     - 레인지(Range)
         - 숫자의 시퀀스를 나타내기 위해 사용
         - 주로 반복문과 함께 사용
+        - 불변 자료형
         
         ```python
         print(list(range(3))) # [0, 1, 2]
         print(list(range(1, 5))) # [1, 2, 3, 4]
-        # range(시작인덱스, 끝인텍스, 간격)
+        # range(start 시작인덱스, end 끝인덱스, step 간격)
         print(list(range(1, 5, 2))) # [1, 3]
         print(list(range(6, 1, -1))) # [6, 5, 4, 3, 2]
         print(list(range(6, 1, -2))) # [6, 4, 2]
         print(list(range(6, 1, 1))) # []
         ```
         
-        - 슬라이시 연산자: 문자열의 특정부분 자름 [인덱스 : 인덱스]
+        - 슬라이스 연산자: 문자열의 특정부분 자름 [start 인덱스 : end 인덱스]
         
         ```python
         print([1, 2, 3, 5][1:4]) # [2,3,5]
@@ -196,7 +198,7 @@
         - key: 변경 불가능한 데이터만 활용 가능(str, int, float, bool, tuple, range)
         - values: 어떤 형태는 상관 없음
         
-        ```python
+         ```python
         dict_a = {}
         dict_b = dict()
         
@@ -205,7 +207,10 @@
         print(dict_a['list']) # [1, 2, 3]
         
         dict_b = dict(a = 'apple', b = 'banana', list = [1, 2, 3])
-        print(dict_b_ #{'a': 'apple', 'b': 'banana', 'list': [1, 2, 3]}
+        print(dict_b) # {'a': 'apple', 'b': 'banana', 'list': [1, 2, 3]}
+        
+        dict_a.keys() # key값만 가져옴
+        dict_a.values() # value값만 가져옴
         ```
         
     
@@ -250,4 +255,9 @@
             ```
             
         
-        ![type.png](/Users/song-yuojin/Desktop/SSAFY/Python/Python)
+        ![type.png](Python/type.png)
+
+
+![자료형](Python/type2.png)
+
+range - immutable
