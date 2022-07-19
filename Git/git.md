@@ -61,9 +61,9 @@
     rm -rf .git  # master 지우기
     ```
     
-    ![git_1](Git/1.png1.png)
+    ![git_1](git/1.png)
     
-    ![git_2](Git/2.png.png)
+    ![git_2](git/2.png)
     
 - 자격 증명 지우기
     
