@@ -277,7 +277,6 @@ print(f'원주율은 {pi:.3}, 반지름이 2인 원 넓이는 {pi*2*2}')
     
     ![type.png](Python/type.png)
     
-
 # 데이터 처리
 
 ---
@@ -294,9 +293,9 @@ print(f'원주율은 {pi:.3}, 반지름이 2인 원 넓이는 {pi*2*2}')
 
 ```python
 if num % 2: # if num % 2 == 1:
-    print('홀수')
+	print('홀수')
 else:
-    print('짝수')
+	print('짝수')
 ```
 
 ### 복수 조건문
@@ -334,13 +333,13 @@ value = num if num >= 0 else -num
 
 ```python
 while 조건:
-    # code block
+	# code block
 
 # 복합 연산자
 a = 0
 while a < 5:
-    print(a)
-    a += 1
+	print(a)
+	a += 1
 print('end')
 ```
 
@@ -353,7 +352,7 @@ print('end')
 
 ```python
 for 변수명 in iterable:
-    # code block
+	# code block
 ```
 
 - dictionary 순회: 기본적으로 key를 순회함
@@ -365,23 +364,23 @@ for 변수명 in iterable:
 grades = {'john': 80, 'eric': 90}
 
 for i in grades:
-    print(i)  # john  eric
-    print(i, grades[i])  # john 80  eric 90
+	print(i)  # john  eric
+	print(i, grades[i])  # john 80  eric 90
 
 for student, grade in grades.items():
-    print(student, grade)  # john 80  eric 90
+	print(student, grade)  # john 80  eric 90
 ```
 
 - enumerate 순회: 인덱스와 객체를 쌍으로 담은 열거형(enumerate) 객체 반환
     - (index, value) 형태의 tuple로 구성된 열거 객체를 반환
 
 ```python
-# enumerate 순회
+[s# enumerate 순회
 
 members = ['a', 'b', 'c']
 
 for idx, member in enumerate(members):
-    print(idx, member)  # 0 a  1 b  2 c
+	print(idx, member)  # 0 a  1 b  2 c
 
 print(list(enumerate(members)))  # [(0, a), (1, b), (2, c)]
 print(list(enumerate(members, start = 1)))  # [(1, a), (2, b), (3, c)]
@@ -416,10 +415,10 @@ print(cubit_list)  # {1: 1, 2: 8, 3: 27}
 
 ```python
 for i in range(10):
-    if  i > 1:
-        print('0과 1만 필요해!')
-        break
-    print(i)
+	if  i > 1:
+		print('0과 1만 필요해!')
+		break
+	print(i)
 
 '''
 0
@@ -432,9 +431,9 @@ for i in range(10):
 
 ```python
 for i in range(6):
-    if i % 2 == 0:
-        continue
-    print(i)
+	if i % 2 == 0:
+		continue
+	print(i)
 '''
 1
 3
@@ -449,15 +448,15 @@ for i in range(6):
 
 # i가 2일때 pass
 for i in range(4):
-    if i == 2:
-        pass
-    print(i)  # 0  1  2  3
+	if i == 2:
+		pass
+	print(i)  # 0  1  2  3
 
 # i가 2일때 continue
 for i in range(4):
-    if i == 2:
-        continue
-    print(i)  # 0  1  3
+	if i == 2:
+		continue
+	print(i)  # 0  1  3
 ```
 
 - for-else: 반복문 끝까지 실행 후 else문 실행
@@ -465,18 +464,18 @@ for i in range(4):
 
 ```python
 for char in 'apple':
-    if char == 'b':
-        print('b!')
-        break
+	if char == 'b':
+		print('b!')
+		break
 else:
-    print('b가 없습니다.')  # b가 없습니다.
+	print('b가 없습니다.')  # b가 없습니다.
 
 for char in 'banana':
-    if char == 'b':
-        print('b!')  # b!
-        break        # break 작동 - else문 실행X
+	if char == 'b':
+		print('b!')  # b!
+		break        # break 작동 - else문 실행X
 else:
-    print('b가 없습니다.')
+	print('b가 없습니다.')
 ```
 
 ## 함수
@@ -500,21 +499,198 @@ else:
 
 ### 함수의 결과값 (output)
 
+- print VS return
+    - print: 값을 출력
+    - return: 값을 반환
+        - 데이터 처리를 하기위해서는 return 해야함
+        - return은 항상 **하나만 반환**
+        - return 없으면 → None 반환
+        
+        ```python
+        # XXXX안됨XXXX
+        def calculator(x, y):
+        	return x - y
+        	return x + y
+        
+        # OOOO가능OOOO
+        def calculator(x, y):
+        	**return x - y, x + y  # 튜플로 2개 이상 값 반환**
+        ```
+        
+
 ### 함수의 입력 (input)
 
-- parameter: 매개변수 인수 인자
-- argument: 인자?
-- positional arguments: 자기 자리에 맞게 찾아 들어가는 것
-- keyword arguments: 직접 변수 지정
+- parameter (매개변수, 인수): 함수를 정의할 때, 함수 내부에서 사용되는 변수
+- argument (인자): 함수를 호출할 때, 넣어주는 값
+    
+    ```python
+    def function(ham):  # parameter: ham
+    	return ham
+    
+    function('spam')  # argument: 'spam'
+    ```
+    
+- Positional Arguments: 자기 자리에 맞게 찾아 들어가는 것
+- Keyword Arguments: 직접 변수 지정
     - keyword 와 positional 을 같이 적을 때는 무조건 positional이 먼저
-- default arguments values: 기본값을 지정해 함수 호출 시 argument 값을 먼저 처리
+    
+    ```python
+    def add(x, y):
+    	return x + y
+    
+    add(x = 2, y = 5)
+    add(2, y = 5)
+    **add(x = 2, 5)  # Error 발생!**
+    ```
+    
+- Default Arguments Values: 기본값을 지정해 함수 호출 시 argument 값을 먼저 처리
     
     ⇒ 복잡한 값은 나중에 넣어주자!
     
+    ```python
+    def add(x, y = 0):  # y=0 기본값 설정
+    	return x + y
+    
+    add(2) # 2  x=2, y=0
+    ```
+    
+- 가변 인자(*args) : 여러개의 Positional Argument를 하나의 필수 parameter로 받아서 사용
+    - 몇 개의  Positional Argument를 받을지 모르는 함수를 정의할 때 유용
+    - 언패킹 시 왼쪽 변수에 asterisk(*)를 붙이면, 할당하고 남은 요소를 리스트에 담음
+    
+    ```python
+    def sum_all(*nums):
+    	result = 0
+    	for num in nums:
+    		result += num
+    	return result
+    
+    print(sum_all(1, 2, 3))  # 6
+    
+    # 언패킹 시 왼쪽 변수에 asterisk(*)를 붙이면, 할당하고 남은 요소를 리스트에 담음
+    def family(father, mother, ***pets**):
+    	print(father)  # 아빠
+    	print(mother)  # 엄마
+    	for name in pets:
+    		print(name)  # 멍멍 \n 냥냥
+    
+    family('아빠', '엄마', **'멍멍', '냥냥'**)
+    ```
+    
+- 가변 키워드 인자(**kwargs): 딕셔너리로 묶여 처리되며, parameter에 **를 붙여 사용
+    - 몇 개의 Keyword Arguments를 받을지 모르는 함수를 정의할 때 유용
+    
+    ```python
+    def family(father, mother, ****pets**):
+    	print(father)  # 아빠
+    	print(mother)  # 엄마
+    	for species, name in pets.items():
+    		print(f'{species}: {name}')  # dog: 멍멍 \n cat: 냥냥
+    
+    family('아빠', '엄마', **dog = '멍멍', cat = '냥냥'**)
+    ```
+    
+- 가변 인자(*args)와 가변 키워드 인자(**kwargs) 동시 사용
+    
+    ```python
+    def family(*parents, ****pets**):
+    	for parent in parents:
+    		print(parent)  # 아빠 /n 엄마
+    	for species, name in pets.items():
+    		print(f'{species}: {name}')  # dog: 멍멍 \n cat: 냥냥
+    
+    family('아빠', '엄마', **dog = '멍멍', cat = '냥냥'**)
+    ```
+    
 
-### Python의 범위 (scope)
+### Python의 범위 (scope) - LEGB
+
+- **함수 내에서는 바깥 scope의 변수에 접근 가능하나 수정 불가**
+
+![scope](Python/scope.png)
+
+- **L**ocal (지역 범위) : 현재 작업 중
+- **E**nclosed (지역 한 단계 위)
+- **G**lobal (최상단)
+- **B**uilt-in (모든 것을 담고 있는 범위) : 정의하지 않고 사용하는 모든 것 ex. print()
+
+```python
+a = 0
+b = 1
+def enclosed():
+	a = 10
+	c = 3
+	def local(c):
+		print(a, b, c)  # 10 1 300
+	local(300)
+	print(a, b, c)  # 10 1 3
+enclosed()
+print(a, b)  # 0 1
+```
+
+![Untitled](Python/scope_ex.png)
 
 ### 함수 응용
+
+- map(function, iterable)
+    
+    ```python
+    numbers = [1, 2, 3]
+    result = map(str, numbers)
+    print(result, type(result)) # <map object at 0x0000----> <class 'map'>
+    print(list(result))  # ['1', '2', '3']
+    ```
+    
+- filter(function, iterable) : 결과가 True인 것들을 filter object 반환
+    
+    ```python
+    def odd(n):
+    	return n % 2
+    numbers = [1, 2, 3]
+    result = filter(odd, numbers)
+    print(result, type(result))  # <filter object at 0x0000----> <class 'filter'>
+    print(list(result))  # [1, 3]
+    ```
+    
+- zip(*iterables) : 복수의 iterable을 모아 튜플을 원소로 하는 zip object 반환
+    
+    ```python
+    girls = ['jane', 'ashley']
+    boys = ['justin', 'eric']
+    pair = zip(girls, boys)
+    print(pair, type(pari))  # <zip object at 0x0000----> <class 'zip'>
+    print(list(pair))  # [('jane', 'justin'), ('ashley', 'eric')]
+    ```
+    
+- lambda[parameter] : 표현식
+    - 표현식을 계산한 결과값을 반환
+    - return문 없음
+    - 간편 조건문 외 조건문, 반복문 가질 수 없음
+    - 함수를 정의하지 않고 간결하게 사용 가능
+    - def를 사용할 수 없는 곳에서도 사용 가능
+    
+    ```python
+    # def 사용
+    def triangle_area(b, h):
+    	return 0.5 * b * h
+    print(triangle_area(5, 6))  # 15.0
+    
+    # lambda 사용
+    triangle_area = lambda b, h : 0.5 * b * h
+    print(triangle_area(5, 6))  # 15.0
+    ```
+    
+- 재귀함수 : 자기 자신을 호출하는 함수 ex. factorial
+    
+    ```python
+    def factorial(n):
+    	if n == 0 or n == 1:
+    		return 1
+    	else:
+    		return n * factorial(n-1)
+    print(factorial(4))  # 24
+    ```
+    
 
 ## 모듈
 
@@ -566,3 +742,163 @@ print(tools.minus(3, 5))  # -2
 python -m venv <폴더명>
 deactivate  # 가상환경 비활성화
 ```
+
+# 데이터 구조
+
+---
+
+### 데이터구조.메서드() = 주어.동사()
+
+## 순서가 있는 데이터 구조
+
+### 문자열(string)
+
+- 변경 불가능(immutable)
+
+| 문법 | 설명 |
+| --- | --- |
+| s.find(x) | x의 첫 번째 위치를 반환. 없으면, -1 반환 |
+| s.index(x) | x의 첫 번째 위치를 반환. 없으면, 오류 발생 |
+| s.isalpha() | 알파벳 문자 여부 (유니코드상 letter, 한국어 포함) |
+| s.isupper() | 대문자 여부 |
+| s.islower() | 소문자 여부 |
+| s.istitle() | 타이틀 형식 여부 |
+
+### 리스트(list)
+
+- 가변 자료형
+
+| 문법 | 설명 |
+| --- | --- |
+| L.append(x) | 리스트 마지막에 항목 x를 추가 |
+| L.insert(i, x) | 리스트 인덱스 i에 항목 x를 삽입 |
+| L.remove(x) | 리스트 가장 왼쪽에 있는 항목(첫 번째) x를 제거. 항목 없으면, ValueError |
+| L.pop() | 리스트의 가장 오른쪽에 있는 항목(마지막)을 반환 후 제거 |
+| L.pop(i) | 리스트의 인덱스 i에 있는 항목을 반환 후 제거 |
+| L.extend(m) | 순회형 m의 모든 항목들의 리스트 끝에 추가 (+=과 같은 기능) |
+| L.index(x, start, end) | 리스트에 있는 항목 중 가장 왼쪽에 있는 항목 x의 인덱스를 반환 |
+| L.reverse() | 리스트를 거꾸로 정렬 |
+| L.sort() | 리스트를 정렬(매개변수 이용가능) |
+| L.count(x) | 리스트에서 항목 x가 몇 개 존재하는지 갯수를 반환 |
+
+### 튜플(tuple)
+
+- 불변 자료형
+
+```python
+a = (1, 2, 3, 1)
+a[0] = 3 # 에러 발생
+
+day_name = ('월', '화', '수', '목', '금')
+#인덱스로 접근
+print(day_name[-2]) # 목
+
+# 반복결합 연산자
+print(day_name * 2) # ('월', '화', '수', '목', '금', '월', '화', '수', '목', '금')
+
+# 확장 연산자; += 사용/ extend는 값을 변경하기 때문에 지원 안함
+day_name += '토', '일'
+print(day_name) # ('월', '화', '수', '목', '금', '토', '일')
+```
+
+## 순서가 없는 데이터 구조
+
+### 셋(set)
+
+- 중복 없음
+- 순서 없음
+- 가변 자료형
+
+| 문법 | 설명 |
+| --- | --- |
+| s.copy() | 셋은 얕은 복사본을 반환 |
+| s.add() | 항목 x가 셋 s에 없다면 추가 |
+| s.pop() | 셋 s에서 랜덤하게 항목을 반환하고, 해당 항목을 제거. set이 비어있을 경우, KeyError |
+| s.remove(s) | 항목 x를 셋 s에서 삭제, 항목이 없으면, KeyError |
+| s.discard(x) | 항목 x가 셋 s에 있는 경우, 항목 x를 셋 s에서 삭제 |
+| s.update(t) | 셋 t에 있는 모든 항목 중 셋 s에 없는 항목을 추가 |
+| s.clear() | 모든 항목을 제거 |
+| s.isdisjoint(t) | 셋 s가 셋 t의 서로 같은 항목을 하나라도 갖고 있지 않은 경우, True 반환 |
+| s.issubset(t) | 셋 s가 셋 t의 하위 셋인 경우, True반환 |
+| s.issuperset(t) | 셋 s가 셋 t의 상위 셋인 경우, True반환 |
+
+### 딕셔너리(dictionary)
+
+- key-value쌍
+- key: 불변 자료형
+- value: 가변 자료형
+
+| 문법 | 설명 |
+| --- | --- |
+| d.clear() | 모든 항목을 제거 |
+| d.copy() | 딕셔너리 d의 얕은 보사본을 반환 |
+| d.keys() | 딕셔너리 d의 모든 키를 담은 뷰를 반환 |
+| d.values() | 딕셔너리 d의 모든 값을 담은 뷰를 반환 |
+| d.items() | 딕셔너리 d의 모든 키-값의 쌍을 담은 뷰를 반환 |
+| d.get(k) | 키 k의 값을 반환하는데, 키 k가 딕셔너리 d에 없을 경우 None을 반환 |
+| d.get(k, v) | 키 k의 값을 반환하는데, 키 k가 딕셔너리 d에 없을 경우 v을 반환 |
+| d.pop(k) | 키 k의 값을 반환하고 키 k인 항목을 딕셔너리 d에서 삭제하는데, 키 k가 딕셔너리 d에 없을 경우 KeyError |
+| d.pop(k, v) | 키 k의 값을 반환하고 키 k인 항목을 딕셔너리 d에서 삭제하는데, 키 k가 딕셔너리 d에 없을 경우 v를 반환 |
+| d.update([other]) | 딕셔너리 d의 값을 매핑하여 없데이트 |
+
+## 얕은 복사 & 깊은 복사
+
+- 할당
+    - 대입연산자(=)
+    
+    ```python
+    original_list = [1, 2, 3]
+    copy_list = original_list
+    print(original_list, copy_list)  # [1, 2, 3] [1, 2, 3]
+    
+    copy_list[0] = 'hello'
+    print(original_list, copy_list)  # ['hello', 2, 3] ['hello', 2, 3]
+    ```
+    
+- 얕은 복사: 주소가 같은 곳을 참조함 ⇒ 하나가 바뀌면 복사한것도 바뀜
+    
+    ```python
+    a = [1, 2, 3]
+    b = a
+    print(a, b)  # [1, 2, 3] [1, 2, 3]
+    b[0] = 5
+    print(a, b)  # [5, 2, 3] [5, 2, 3]
+    ```
+    
+    - **slice 연산자 활용**하여 같은 원소를 가진 리스트지만 연산된 결과를 복사 (**다른 주소**)
+    
+    ```python
+    a = [1, 2, 3]
+    b = a[:]
+    print(a, b)  # [1, 2, 3] [1, 2, 3]
+    b[0] = 5
+    print(a, b)  # [1, 2, 3] [5, 2, 3]
+    ```
+    
+    - 주의: 복사하는 리스트의 원소가 주소를 참조하는 경우
+        
+        → **값을 모아놓은 것을 복사하는 경우에는 깊은 복사를 해야함**
+        
+    
+    ```python
+    a = [1, 2, ['a', 'b']]
+    b = a[:]
+    print(a, b)  # [1, 2, ['a', 'b']] [1, 2, ['a', 'b']]
+    b[2][0] = 0
+    print(a, b)  # [1, 2, [0, 'b']] [1, 2, [0, 'b']]
+    
+    # a, b의 주소(id)값은 다르지만, 내부 값은 영향을 받음
+    # 내부의 객체 id(a[2])과 id(b[2])은 같은 주소를 바라보고 있기 때문
+    ```
+    
+- 깊은 복사: 주소가 다른 곳에 복사 ⇒ 서로 독립적
+    - 값을 모아놓은 것을 복사하는 경우에는 깊은 복사를 해야함
+    
+    ```python
+    **import copy**
+    a = [1, 2, ['a', 'b']]
+    b = **copy.deepcopy**(a)
+    print(a, b)  # [1, 2, ['a', 'b']] [1, 2, ['a', 'b']]
+    b[2][0] = 0
+    print(a, b)  # [1, 2, ['a', 'b']] [1, 2, [0, 'b']]
+    ```
