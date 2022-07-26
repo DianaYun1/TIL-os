@@ -70,6 +70,29 @@
     제어판> 자격 증명 관리> window 자격 증명> 일반 자격 증명> 지울 사이트 제거
     
 
+### Gitignore
+
+- git에 공개적으로 올라가지 말아야할 폴더/파일을 자동으로 커밋이 안되게 해주는 기능
+- .gitignore 파일에 숨길 폴더/파일명을 적고 저장하면 됨
+    - *.txt : txt 파일 전체 ignore
+    - ignore/, ignore/* : ignore 폴더 전체 ignore
+- .gitignore에 넣어야될 거 알려주는 사이트
+    - window, python 등을 사용할때 자동으로 생성되는 것들 숨김처리
+    
+    [gitignore.io](https://www.toptal.com/developers/gitignore/)
+    
+- .gitkeep 파일을 만들면 폴더 내 파일들이 모두 ignore 돼있어도 빈 폴더로 git에 올라감
+    - .gitkeep이 없고 폴더 내 파일 모두 ignore이면 폴더는 git에 올라가지 않음
+- VScode 에서 커밋할 때는 commit을 길게 쓸 수 있음
+    
+    <aside>
+    🗒️ 커밋 제목
+    한줄 공백
+    자세한 내용
+    
+    </aside>
+
+
 ## Gitlab/Github/Bitbucket
 
 - git 기반으로하는 **저장소 서비스**
