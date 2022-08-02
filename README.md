@@ -11,6 +11,10 @@
 - 함수
 - 모듈
 
+## [Web](https://github.com/Belluable/TIL/blob/master/Web/Web.md)
+- HTML
+- CSS
+
 ## Algorithm
 
 ## Django

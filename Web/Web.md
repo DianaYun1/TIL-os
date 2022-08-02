@@ -10,7 +10,7 @@
 CSS → 표현
 Javascript → 동작
 
-![web](web/web.png)
+![web](Web/web.png)
 
 </aside>
 
