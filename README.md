@@ -14,6 +14,7 @@
 ## [Web](https://github.com/Belluable/TIL/blob/master/Web/Web.md)
 - HTML
 - CSS
+- Bootstrap
 
 ## Algorithm
 
