@@ -1,5 +1,17 @@
 # Web
 
+
+- 참고자료
+    
+    [이번에야말로 CSS Flex를 익혀보자](https://studiomeal.com/archives/197)
+    
+- 개발자 도구 Emmet
+    
+    [Cheat Sheet](https://docs.emmet.io/cheat-sheet/)
+    
+    [https://docs.emmet.io/cheat-sheet/](https://docs.emmet.io/cheat-sheet/)
+    
+
 ## Web
 
 - 브라우저를 통해서 접속하는 웹 페이지(문서)들의 모음
@@ -31,14 +43,14 @@ Javascript → 동작
 <!DOCTYPE html>
 <html land="en">  <!-- 최상위(root)요소 -->
   <head>  <!-- 메타데이터 요소 -->
-	  <meta charset="UTF-8">  <!-- 문서 레벨 메타데이터 요소 -->
+		<meta charset="UTF-8">  <!-- 문서 레벨 메타데이터 요소 -->
     <title>배고파</title>
-	  <link href="style.css" rel="stylesheet">
-	  <script src="javascript.js"></script>
-	  <style></style>  <!-- CSS 직접 작성 -->
+		<link href="style.css" rel="stylesheet">
+		<script src="javascript.js"></script>
+		<style></style>  <!-- CSS 직접 작성 -->
   </head>
   <body>  <!-- 본문 요소 -->
-	  오늘 점심 뭐지
+		오늘 점심 뭐지
   </body>
 </html>
 ```
@@ -93,22 +105,22 @@ Javascript → 동작
 
 | 텍스트 요소 태그 | 설명 |
 | --- | --- |
-| <a /a> | href 속성을 활용하여 URL로 연결하는 하이퍼링크 생성 |
-| <b /b> <strong /strong> | 굵은 글씨 강조 |
-| <i /i> <em /em> | 기울임 글씨 강조 |
-| br | 텍스트 내에 줄 바꿈 생성 |
-| img | src 속성을 활용하여 이미지 표현 |
-| <span /span> | 의미 없는 인라인 컨테이너 |
+| <a></a> | href 속성을 활용하여 URL로 연결하는 하이퍼링크 생성 |
+| <b></b> <strong></strong> | 굵은 글씨 강조 |
+| <i></i> <em></em> | 기울임 글씨 강조 |
+| <br> | 텍스트 내에 줄 바꿈 생성 |
+| <img> | src 속성을 활용하여 이미지 표현 |
+| <span></span> | 의미 없는 인라인 컨테이너 |
 
 | 그룹 컨텐츠 태그 | 설명 |
 | --- | --- |
-| <p /p> | 하나의 문단 (paragraph) |
-| hr | 문단 레벨 요소에서 주제의 분리를 의미, 수평선으로 표현 (a horizontal rule) |
-| <ol /ol> | 순서가 있는 리스트(ordered) |
-| <ul /ul> | 순서가 없는 리스트(unordered) |
-| <prem/pre> | HTML에 작성한 내용을 그대로 표현 |
-| <blockquotem/blockquote> | 텍스트가 긴 인용문, 주로 들여쓰기 한 것으로 표현 |
-| <div /div> | 의미 없는 블록 레벨 컨테이너 |
+| <p></p> | 하나의 문단 (paragraph) |
+| <hr> | 문단 레벨 요소에서 주제의 분리를 의미, 수평선으로 표현 (a horizontal rule) |
+| <ol></ol> | 순서가 있는 리스트(ordered) |
+| <ul></ul> | 순서가 없는 리스트(unordered) |
+| <pre></pre> | HTML에 작성한 내용을 그대로 표현 |
+| <blockquote></blockquote> | 텍스트가 긴 인용문, 주로 들여쓰기 한 것으로 표현 |
+| <div></div> | 의미 없는 블록 레벨 컨테이너 |
 
 ---
 
@@ -119,7 +131,7 @@ Javascript → 동작
 </form>
 ```
 
-- form
+- <form>
     - 사용자의 input를 받기위한 용도
     - 정보(데이터)를 서버에 제출하기 위해 사용하는 태그
     - 사용자는 form에 입력을하고 이걸 server에 전달해준다
@@ -134,7 +146,7 @@ Javascript → 동작
     |  | application/x-www-form-unlencoded : 기본값 |
     |  | multipart/form-data : 파일 전송시 (input type이 file인 경우) |
     |  | text/plain : HTML5 디버깅 용 (잘 사용되지 않음) |
-- input
+- <input>
     
     [: 입력 요소 - HTML: Hypertext Markup Language | MDN](https://developer.mozilla.org/ko/docs/Web/HTML/Element/Input)
     
@@ -161,7 +173,7 @@ Javascript → 동작
     | disabled | 사용하지 않을 속성들 |
     | readonly,  autocomplete  등 |  |
     
-    | input type=”여기” | 설명 |
+    | <input type=”여기”> | 설명 |
     | --- | --- |
     | text | 일반 텍스트 입력 |
     | password | 입력 시 값이 보이지 않고 문자를 특수기호(*)로 표현 |
@@ -174,11 +186,11 @@ Javascript → 동작
     | date | date picker |
     | hidden | 사용자에게 보이지 않지만, 서버에 전송되야 하는 input |
     | submit | 버튼 형식 |
-- input label
+- input label <label>
     - label을 클릭하여 input 자체의 초점을 맞추거나 활성화 시킬 수 있음
     - 사용자가 선택할 수 있는 영역이 늘어나 웹/모바일 환경에서 편하게 사용 가능
     - label과 input 입력의 관계가 시각적 뿐만 아니라 화면리더기에서도 label을 읽어 쉽게 내용을 확인 할 수 있도록 함
-    - input에 id 속성을, label에 for 속성을 활용해 상호 연관 시킴
+    - <input>에 id 속성을, <label>에 for 속성을 활용해 상호 연관 시킴
 
 ## CSS (Cascading Style Sheets)
 
@@ -363,8 +375,8 @@ Javascript → 동작
 
 ```
 
-[inline vs block](Web/inline.jpg)
-
+![inline vs block](Web/inline.jpg)
+s
 ### CSS Position
 
 [position - CSS: Cascading Style Sheets | MDN](https://developer.mozilla.org/ko/docs/Web/CSS/position)
@@ -380,11 +392,97 @@ Javascript → 동작
 - sticky : 스크롤에 따라 static → fixed
     - 스크롤을 해서 화면에서 사라지는 위치에 가면 화면상 정해준 자리에 계속 있음. ex. 상단 배너
 - fixed : 고정 위치 ex. top 버튼
+- CSS layout 복습
+    - nomal flow : 좌측 상단 기준으로 모임
+    - dispaly:
+        - inline(a, span),
+        - block(div, form, header, footer, secton),
+        - none 코드는 있는데 자리 없음 (vs visibility hidden 보이지 않지만 자리 있음)
+    - position: 모두 박스 모델 content>padding>border>margin
 
-- 개발자 도구
-    
-    Emmet
-    
-    [Cheat Sheet](https://docs.emmet.io/cheat-sheet/)
-    
-    [https://docs.emmet.io/cheat-sheet/](https://docs.emmet.io/cheat-sheet/)
+## Bootstrap
+
+- float : left, right, none
+    - 박스를 왼쪽 혹은 오른쪽으로 이동시켜 텍스트를 포함 인라인요소들이 주변을 wrapping 하도록 함
+    - normal flow를 벗어나도록 함
+    - ex. naver 로고
+
+### flexbox
+
+[Flex](https://getbootstrap.com/docs/5.0/utilities/flex/)
+
+![flexbox](Web/axis.png)
+
+- flex container : 부모 요소
+- flex item : 자식 요소
+- display: flex;
+
+| 배치 설정 | 설명 | 종류 |
+| --- | --- | --- |
+| flex-direction | main axis 기준 방향 설정 | row |
+|  |  | row-reverse |
+|  |  | column |
+|  |  | column-reverse |
+| flex-wrap | 컨테이너 영역을 벗어나지 않도록 함 | wrap |
+|  |  | nowrap |
+| flex-flow | flex-direction + flex-wrap | ex. flex-flow: row wrap; |
+
+| 공간 나누기 | 설명 | 종류 |
+| --- | --- | --- |
+| justify-content | main axis 기준 공간 배분 | flex-start |
+| align-content | cross axis 기준 공간 배분 | flex-end |
+|  | (아이템이 한 줄로 배치되는 경우 확인 불가) | center |
+|  |  | space-between |
+|  |  | space-around |
+|  |  | space-evenly |
+
+| 정렬 | 설명 | 종류 |
+| --- | --- | --- |
+| align-items | 모든 아이템을 cross axis 기준 정렬 | stretch |
+| align-self | 개별 아이템을 cross axis 기준 정렬 | flex-start |
+|  | (컨테이너에 적용 X, baseline 없나?) | flex-end |
+|  |  | center |
+|  |  | baseline |
+
+### grid
+
+[Grid system](https://getbootstrap.com/docs/5.0/layout/grid/)
+
+- 요소들의 디자인과 배치에 동움 주는 시스템
+- column : 실제 컨텐츠를 포함하는 부분
+- gutter : 칼럼과 칼럼 사이의 공간 (사이 간격)
+- container : column들을 담고 있는 공간
+- column 12개, grid breakpoints 6개
+- col-3 col-8
+- nesting
+- offset : 몇간 띄워라
+
+![grid](Web/breakpoint.png)
+
+### spacing
+
+ex. m-1, p-2, mt-3
+
+| m | margin |
+| --- | --- |
+| p | padding |
+
+| t | top |
+| --- | --- |
+| b | bottom |
+| s | left |
+| e | right |
+| x | left, right |
+| y | top, bottom |
+
+| 0 | 0 rem | 0px |
+| --- | --- | --- |
+| 1 | 0.25 rem | 4px |
+| 2 | 0.5 rem | 8px |
+| 3 | 1 rem | 16px |
+| 4 | 1.5 rem | 24px |
+| 5 | 3 rem | 48px |
+
+### color
+
+![color](Web/color.png)
