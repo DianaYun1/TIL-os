@@ -10,6 +10,9 @@
 - 제어문
 - 함수
 - 모듈
+- 데이터 구조
+- OOP(객체지향)
+- 에러 및 예외 처리
 
 ## [Web](https://github.com/Belluable/TIL/blob/master/Web/Web.md)
 - HTML

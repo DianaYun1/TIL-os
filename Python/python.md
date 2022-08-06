@@ -902,3 +902,451 @@ print(day_name) # ('월', '화', '수', '목', '금', '토', '일')
     b[2][0] = 0
     print(a, b)  # [1, 2, ['a', 'b']] [1, 2, [0, 'b']]
     ```
+
+
+# OOP (Object-Oriented Programming)
+
+---
+
+절차지향 → 객체지향
+
+## 객체지향 프로그래밍
+
+- 객체
+    
+    모든 것이 객체, 모든 객체는 특정 타입의 인스턴스
+    
+    모든 객체는 타입(type), 속성(attribute), 조작법(method)을 가집니다.
+    
+    - **타입(type)**: 어떤 연산자(operator)와 조작(method)이 가능한가?
+    - **속성(attribute)**: 어떤 상태(데이터)를 가지는가?
+    - **조작법(method)**: 어떤 행위(함수)를 할 수 있는가?
+
+### 객체지향 프로그래밍
+
+- 컴퓨터 프로그래밍의 패러다임(방법론) 중 하나이다.
+- 프로그램을 여러 개의 독립된 객체들과 그 객체 간의 상호작용으로 파악하는 프로그래밍 방법
+- 객체 = 변수 + 함수  ex. 가수: 아이돌 + 노래
+- 코드의 **직관성**
+- 활용의 **용이성**
+- 변경의 **유연성**
+- 절차지향
+    
+    Global data - function1 - function4, function2 - function3 - function4, function5…
+    
+    중간에 바뀌면 줄줄이 다 바꿔야함
+    
+    ![절차지향 vs 객체지향](Python/절차지향.png)
+    
+- 객체지향
+    
+    데이터와 기능(메서드) 분리, 추상화된 구조(인터페이스)
+    
+    Object 안에 특정 기준에 맞춰서 
+    
+    Object1 - data - methods1(함수), methods2
+    
+    Object2 - data - methods
+    
+    ![OOP]](Python/oop.png)
+    
+
+### OOP 기초
+
+- 객체 = 속성 + 행동/기능  = `**변수` + `함수-메서드`** = 특정 타입의 인스턴스다
+    - 속성: 직업-가수, 국적-대한민국
+    - 행동: 랩하기 , 댄스
+- 가수 이찬혁
+    - 클래스 - 가수 / 객체(실제 사례) - 이찬혁
+- 인스턴스 : 클래스로 만든 객체
+    - 이찬혁은 객체다 (o)
+    - 이찬혁은 인스턴스다 (x)
+    - 이찬혁은 가수의 인스턴스다 (o)
+- 클래스(가수)를 만든다 = 타입(list)을 만든다
+
+### 객체와 클래스 문법
+
+```python
+# 클래스 정의
+class MyClass:
+	pass
+
+# 인스턴스 생성
+my_instance = MyClass()
+
+# 속성 접근
+my_instance.my_attribute
+
+# 메서드 호출
+my_instance.my_method()
+```
+
+- 객체의 설계도(클래스)를 가지고 객체(인스턴스)를 생성한다.
+    - Person (클래스) → 가수 이찬혁, 감독 강해피, 팬 김해피 (인스턴스)
+- 클래스 : 객체들의 분류 / 설계도
+- 인스턴스 : 하나하나의 실체 / 예
+
+```python
+class Person:
+	pass
+print(type(Person))  # <class 'type'>
+
+person1 = Person()
+
+print(isinstance(person1 Person))  # True
+print(type(person1))  # <class '_ _main_ _.Person'>
+```
+
+- == VS is
+    - == : 변수가 참조하는 객체가 내용이 같은 경우
+    - is : 두 변수가 동일한 객체를 가리키는 경우
+    
+    ```python
+    a = [1, 2, 3]
+    b = [1, 2, 3]
+    print(a == b, a is b)  # True False
+    
+    a = [1, 2, 3]
+    b = a
+    print(a == b, a is b)  # True True
+    ```
+    
+
+### OOP 속성
+
+- 특정 데이터 타입/클래스의 객체들이 가지게 될 상태/데이터를 의미
+- 클래스 변수/ 인스턴스 변수가 존재
+- 클래스 변수
+    - 한 클래스의 모든 인스턴스가 공유하는 값을 의미
+    - 같은 클래스의 인스턴스들은 같은 값을 갖게 됨
+    - ex. 특정 사이트의 User 수 등은 클래스 변수를 사용해야 함
+    - 클래스 선언 내부에서 정의
+    - <classname>.<name>으로 접근 및 할당
+- 인스턴스 변수
+    - 인스턴스가 개인적으로 가지고 있는 속성, 각 인스턴스들의 고유한 변수
+    - 생성자 메서드(`__init__`)에서 self.<name>으로 정의
+    - 인스턴스가 생성된 이후 <instance>.<name>으로 접근 및 할당
+
+```python
+class Person:
+	blood_color = 'red'  # 클래스 변수 정의
+	population = 100  # 클래스 변수 정의
+	count = 0  # 사용자가 몇명인지 확인
+
+		def __init__(self, name):  # 인스턴스 변수 정의
+			self.name = name  # 인스턴스 변수
+			Person.count += 1  # 인스턴스가 생성될 때마다 클래스 변수가 늘어나도록 설정
+
+person1 = Person('유진')
+person2 = Person('정호')
+
+print(person1.name)  # 유진  /인스턴스 변수 접근 및 할당
+print(person1.blood_color)  # red  /클래스 변수 접근 및 할당
+
+Person.blood_color = 'blue'  # 클래스 변수 변경
+print(person1.blood_color)  # blue
+print(person2.blood_color)  # blue
+
+person1.population = 20  # 인스턴스 변수 변경
+print(Person.population)  # 100  /클래스 변수
+print(person2.population)  # 100  /클래스 변수
+print(person1.population)  # 20  /새로운 인스턴스 변수가 생성됨
+
+print(Person.count)  # 2  /사용자가 몇명인지 확인
+```
+
+### OOP 메서드
+
+- 특정 데이터 타입/클래스의 객체에 공통적으로 적용 가능한 행위(함수)
+- 클래스 - 인스턴스 변수 사용 불가
+- 인스턴스 - 클래스 변수, 인스턴스 변수 둘 다 사용 가능
+
+```python
+class Person:
+
+	def talk(self):
+		print('안녕')
+
+	def eat(self, food):
+		print(f'{food}를 냠냠')
+
+person1 = Person()
+person1.talk()  # 안녕
+person1.eat('피자') # 피자를 냠냠
+person1.eat('치킨') # 치킨를 냠냠
+```
+
+- **인스턴스 메서드**
+    - 인스턴스 변수를 사용하거나, 인스턴스 변수에 값을 설정하는 메서드
+    - 클래스 내부에 정의되는 메서드의 기본
+    - 호출 시, 첫번째 인자로 인스턴스 자기자신(self)이 전달됨
+    
+    ```python
+    class MyClass:
+    
+    	def instance_method(self, arg1, ...):
+    
+    my_instance = MyClass()
+    my_instance.instance_method(...)
+    ```
+    
+    - 생성자 메서드 : 인스턴스 객체가 생성될 때 자동으로 호출되는 메서드
+        - 인스턴스 변수들의 초기값을 설정
+        - 인스턴스 생성, `__init__` 메서드 자동 호출
+        
+        ```python
+        class Person:
+        
+        	def __init__(self):
+        		print('인스턴스가 생성되었습니다.')
+        
+        person1 = Person()  # 인스턴스가 생성되었습니다.
+        
+        class Person:
+        
+        	def __init__(self, name):
+        		print(f'인스턴스가 생성되었습니다. {name}')
+        
+        person1 = Person('지민')  # 인스턴스가 생성되었습니다. 지민
+        ```
+        
+    - 소멸자 메서드 : 인스턴스 객체가 소멸(파괴)되기 직전에 호출되는 메서드
+        
+        ```python
+        class Person:
+        
+        	def __del__(self):
+        		print('인스턴스가 사라졌습니다.')
+        
+        person1 = Person()
+        del person1  # 인스턴스가 사라졌습니다.
+        ```
+        
+    - 매직 메서드(스페셜 메서드) : Double underscore(__)가 있는 메서드
+        - 특수한 동작을 위해 만들어짐
+        - 특정 상황에 자동으로 불림
+        - `__str__(self)`, `__len(self)__`, `__repr__(self)`
+        - `__lt__(self, other)`, `__le__(self, other)`, `__eq__(self, other)`
+        - `__gt__(self, other)` , `__ge__(self, other)`, `__ne__(self, other)`
+        - `__str__` : 해당 객체의 출력형태를 지정, print() 호출할 때 자동 호출
+        - `__gt__` : 부등호 연산자(>, greater than)
+        
+        ```python
+        class Circle:
+        
+        	def __init__(self, r):
+        		self.r = r
+        	
+        	def area(self):
+        		return 3.14 * self.r * self.r
+        
+        	def __str__(self):
+        		return f'[원] radius: {self.r}'
+        
+        	def __gt__(self, other):
+        		return self.r > other.r
+        
+        c1 = Circle(10)
+        c2 = Circle(1)
+        
+        print(c1)  # [원] radius: 10
+        print(c2)  # [원] radius: 1
+        print(c1 > c2)  # True
+        print(c1 < c2)  # False
+        ```
+        
+- **클래스 메서드**
+    - @classmethod 데코레이터를 사용하여 정의
+    - 호출 시, 첫번째 인자로 클래스(cls)가 전달됨
+    - 데코레이터 : 함수를 어떤 함수로 꾸며서 새로운 기능을 부여, 함수 위에 작성
+    
+    ```python
+    class MyClass:
+    	
+    	@classmethod
+    	def class_method(cls, arg1, ...):
+    
+    MyClass.class_method(...)
+    ```
+    
+    ```python
+    class Person:
+    	count = 0
+    	def __init__(self, name):
+    		self.name = name
+    		Person.count += 1
+    
+    	@classmethod
+    	def number_of_population(cls):
+    		print(f'인구수는 {cls.count}입니다.')
+    
+    person1 = Person('아이유')
+    person2 = Person('이찬혁')
+    print(Person.count)
+    ```
+    
+- **정적(스태틱) 메서드**
+    - 인스턴스 변수, 클래스 변수를 전혀 다루지 않는 메서드
+    ⇒ 객체 상태나 클래스 상태를 수정할 수 없음
+    - 속성을 다루지 않고 단지 기능(행동)만을 하는 메서드를 정의할 때 사용
+    - @staticmethod 데코레이터 사용하여 정의
+    - 일반 함수처럼 동자가지만 클래스의 namespace에 귀속됨
+    - 주로 해당 클래스로 한정하는 용도로 사용
+    
+    ```python
+    class MyClass:
+    
+    	@staticmethod
+    	def static_method(arg1, ...):
+    
+    MyClass.static_method(...)
+    ```
+    
+    ```python
+    class Person:
+    	count = 0
+    	def __init__(self, name):  # 인스턴스 변수 설정
+    		self.name = name
+    		Person.count += 1
+    
+    	@staticmethod
+    	def check_rich(money):  # 스태틱은 cls, self 사용 x
+    		return money > 10000
+    
+    person1 = Person('아이유')
+    person2 = Person('이찬혁')
+    print(Person.check_rich(100000)  # True 스태틱은 클래스로 접근 가능
+    print(person1.check_rich(100000)  # True 스택틱은 인스턴스로 접근 가능
+    ```
+    
+- 인스턴스와 클래스 간의 이름 공간 (namespace)
+    - 클래스를 정의하면, 클래스와 해당하는 이름 공간 생성
+    - 인스턴스를 만들면, 인스턴스 객체가 생성되고 이름공간 생성
+    - 인스턴스에서 특정 속성에 접근하면, 인스턴스-클래스 순으로 탐색
+    
+    ```python
+    # Person 정의
+    class Person:
+    	name = 'unknown'
+    
+    	def talk(self):
+    		print(self.name)
+    
+    p1 = Person()
+    p1.talk()  # unknown /p1은 인스턴스 변수가 정의되지 않아 클래스 변수 출력
+    
+    # p2 인스턴스 변수 설정 전/후
+    p2 = Person()
+    p2.talk()  #unknown
+    p2.name = 'Kim'
+    p2.talk()  # Kim  /p2는 인스턴스 변수가 정의되어 인스턴스 변수 출력
+    
+    print(Person.name) # unknown
+    print(p1.name) # unknown
+    print(p2.name) # Kim
+    
+    ''' Person 클래스의 값이 Kim으로 변경된 것이 아닌 
+    p2 인스턴스의 이름 공간에 name이 Kim으로 저장됨 '''
+    ```
+    
+
+### 메서드 정리
+
+- 인스턴스 메서드 : 호출한 인스턴스를 의미하는 self 매개 변수를 통해 인스턴스를 조작
+- 클래스 메서드 : 클래스를 의미하는 cls 매개 변수를 통해 클래스를 조작
+- 스태틱 메서드 : 클래스 변수나 인스턴스 변수를 사용하지 않는 경우에 사용
+    - 객체 상태나 클래스 상태를 수정할 수 없음
+
+```python
+class MyClass:
+
+	def method(self):
+		return 'instance method', self
+
+	@classmethod
+	def classmethod(cls):
+		return 'class method', cls
+
+	@staticmethod
+	def staticmethod():
+		return 'static method'
+
+# 인스턴스 메서드 호출
+obj = MyClass()
+print(obj.method())  # ('instance method', <__main__.MyClass at 0x-->)
+print(MyClass.method(obj))  # ('instance method', <__main__.MyClass at 0x-->)
+
+# 클래스 자체에서 메서드 호출 - 인스턴스 메서드는 호출 불가
+print(MyClass.classmethod())  # ('class method', __main__.MyClass)
+print(MyClass.staticmethod())  # static method
+MyClass.method()  # method() missing 1 required positional argument: 'self'
+
+# 인스턴스는 클래스 메서드와 스태틱 메서드 모두 접근 가능
+print(obj.classmethod())  # ('class method', <class '__main__.MyClass'>)
+print(MyClass.classmethod())  # ('class method', <class '__main__.MyClass'>)
+print(obj.staticmethod())  # static method
+```
+
+## 객체 지향의 핵심개념
+
+### 추상화 : 복잡한거 숨기고, 필요한거 나타냄
+
+현실 세계를 프로그램 설계에 반영
+
+### 상속 : 부모 클래스 - 자식 클래스 관계 → 물려받기 → 재사용
+
+- 두 클래스 사이 부모 - 자식 관계 정립
+- 클래스는 상속이 가능함
+- 모든 파이썬 클래스는 object를 상속 받음
+- 하위 클래스는 상위 클래스에 정의된 속성, 행동, 관계, 제약 조건 모두 상속 받음
+- 코드 재사용성 높음
+- 메서드 오버라이딩을 통해 자식 클래스에서 재정의 가능
+- 상속관계에서 namespace는 인스턴스, 자식 클래스, 부모 클래스 순으로 탐색
+- 다중상속
+    - 2개 이상의 클래스를 상속 받는 경우
+    - 상속받은 모든 클래스의 요소를 활용 가능함
+    - 중복된 속성이나 메서드가 있는 경우 상속 순서에 의해 결정
+
+```python
+class ChildClass(ParentClass):
+```
+
+| 함수/ 메서드 | 설명 |
+| --- | --- |
+| isinstance(object, classinfo) | classinfo의 instance거나 subclass인 경우 |
+| issubclass(class, classinfo) | class가 classinfo의 subclass면 True/ classinfo는 클래스 객체의 튜플일 수 있으며, classinfo의 모든 항목을 검사 |
+| super() | 자식 클래스에서 부모 클래스를 사용하고 싶은 경우 |
+| mro() | 해당 인스턴스의 클래스가 어떤 부모 클래스를 가지는지 확인하는 메서드/ 기존 인스턴스 → 자식 클래스 → 부모 클래스 |
+
+### 다형성 : 이름은 같은데, 동작은 다른 것 → 오버라이딩 → 부모자식이 그대로(x) 자식이 변경
+
+- 여러 모양
+- 동일한 메서드가 클래스에 따라 다르게 행동할 수 있음
+- 즉, 서로 다른 클래스에 속해있는 객체들이 동일한 메시지에 대해 다른 방식으로 응답 가능
+- 메서드 오버라이딩
+    - 상속받은 메서드를 재정의
+    - 상속받은 클래스에서 같은 이름의 메서드로 덮어씀
+    - 부모 클래스의 메서드를 실행시키고 싶은 경우 super를 활용
+
+### 캡슐화 : 민감한 정보를 숨기는 것 → getter, setter
+
+- 객체의 일부 구현 내용에 대해 외부로부터의 직접적인 엑세스를 차단 ex. 주민등록번호
+- 파이썬에서 암묵적으로 존재하지만, 언어적으로는 존재하지 않음
+- Public Member
+    - 언더바 없이 시작하는 메서드나 속성
+    - 어디서나 호출이 가능, 하위 클래스 override 허용
+    - 일반적으로 작성되는 메서드와 속성의 대다수를 차치
+- Protected Member :
+- Private Member
+- getter()
+- setter()
+
+![객체](Python/객체.png)
+
+# 에러/예외처리
+
+---
+
+## 에러와 예외
+
+## 예외처리
