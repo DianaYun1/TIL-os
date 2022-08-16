@@ -204,3 +204,64 @@ public class intro03_printTest {
     	System.out.println(x);
     }
     ```
+
+        
+- 배열의 복사
+    
+    ```java
+    System.arraycopy(Object src, int srcPos, Object dest, int destPos, int length)
+    /*
+    src: 원본배열
+    srcPos: 원본배열 복사 시작 위치
+    dest: 복사할 배열
+    destPos: 복사 받을 시작 위치
+    length: 복사할 크기
+    */
+    ```
+    
+    ```java
+    int[] arr = {1, 3, 5, 7, 9};
+    
+    // 반복문 이용해서 복사
+    int[] tmp = new int[arr.length*2];
+    
+    // arraycopy 이용
+    int[] tmp2 = new int[arr.length*2];
+    
+    System.arraycopy(arr, 0, tmp2, 0, arr.length);
+    
+    System.out.println(Arrays.toString(tmp2));
+    ```
+    
+
+### 다차원 배열
+
+- 2차원 이상 배열
+
+```java
+// 배열 선언
+int[][] arr
+int arr[][]
+int[] arr[]
+
+// 배열 생성
+배열의 이름 = new 배열유형[1차원 배열 갯수][1차원 배열의 크기];  // 0으로 초기화
+배열의 이름 = new 배열유형[1차원 배열 갯수][];  //
+```
+
+- 물리적
+
+![2차원배열-물리적](Java/2%EC%B0%A8%EC%9B%90%20%EB%B0%B0%EC%97%B4(%EB%AC%BC%EB%A6%AC%EC%A0%81).png)
+
+- 논리적
+
+![2차원배열-논리적](Java/2%EC%B0%A8%EC%9B%90%20%EB%B0%B0%EC%97%B4(%EB%85%BC%EB%A6%AC%EC%A0%81).png)
+
+---
+
+### 객체지향 프로그래밍 특징 (A PIE)
+
+- Abstraction (추상화)
+- Polymorphism (다형성)
+- Inheritance (상속)
+- Encapsulation (캡슐화)
