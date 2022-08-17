@@ -5,11 +5,20 @@ t = int(input())
 for tc in range(1, t+1):
     lst = input()
     laser = '()'
-    cnt = 0
+    cnt = stick = ans = 0
+    s = []
 
-    for i in range(len(lst)-1):
+    i = 0
+    while i < len(lst):
         if lst[i:i+2] == laser:
+            cnt += stick
+            i += 2
+        elif lst[i] == '(':
+            stick += 1
+            i += 1
+        elif lst[i] == ')':
             cnt += 1
-    print(cnt)
+            stick -= 1
+            i += 1
 
-    # print(f'#{tc} {ans}')
+    print(f'#{tc} {cnt}')
