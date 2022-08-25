@@ -2,7 +2,7 @@ package java01.array;
 
 import java.util.Arrays;
 
-public class frequancy {
+public class array01 {
 	public static void main(String[] args) {
 		int[] arr = {3, 2, 6, 6, 4, 3, 6, 7, 1, 1, 1, 5, 9};
 		
