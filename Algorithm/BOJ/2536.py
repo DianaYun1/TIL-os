@@ -1,6 +1,7 @@
 m, n = map(int, input().split())
 k = int(input())
 bus = []
+ans = 0
 for _ in range(k):
     b, x1, y1, x2, y2 = map(int, input().split())
     bus.append((b, x1, y1, x2, y2))
@@ -12,3 +13,5 @@ for b, x1, y1, x2, y2 in bus:
         pass
     elif y1 == y2:
         pass
+
+print(ans)
