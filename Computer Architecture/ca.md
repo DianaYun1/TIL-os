@@ -1,6 +1,7 @@
-# 5/2, 7 컴퓨터 구조
+# 컴퓨터 구조
 
 Tags: VM, compile, linking, os, 컴파일러, 컴퓨터 아키텍처
+Start Date: 2024년 5월 2일
 
 내부를 이해해야함, 어떻게 돌아가느냐
 
@@ -106,7 +107,7 @@ function add(a, b){
 
 - 이전 값을 잠깐 담아두는 곳
 - 기술 발전 → 2~4개 까지 둠 (2주소 방식, 4주소 방식)
-- [명령어 구조](https://www.notion.so/5-2-7-9cd673efc375473488e3fbb4b8c9c2bd?pvs=21)를 보자
+- [명령어 구조](https://www.notion.so/9cd673efc375473488e3fbb4b8c9c2bd?pvs=21)를 보자
 
 ```c
 a = 1+2; // a=3을 누산기에 잠깐 담아둠
@@ -191,6 +192,34 @@ cpu가 이해할 수 있는 코드를 작성해야함
 
 반도체 판 안에 다 os가 있음  ex. imbeded linux, android, chronium(키오스크) 등
 
+### CMOS = ROM BIOS
+
+- CMOS → booting → window/mac
+- CMOS(ROM): 마더보드에 있는 메모리
+    - 몇기가, 코드 이것저것 담겨있음
+    - read only memory
+    - 비휘발성, 읽기만 가능
+- RAM
+    - random acess memory
+    - 휘발성
+- Kernel
+    - 펌웨어에 가까움 hw에 가까운 프로그램
+    - hw ↔ sw
+    - cmos에 있는 데이터를 memory(RAM)으로 가져옴
+    - 응용sw, 시스템 sw, 펌웨어, hw 를 다 control 함
+    - 미러링: c드라이브, d드라이브가 있을 때 c를 그대로 d로 복제 → c 메모리가 날라갈 경우를 대비
+    - 리눅스에는 FAT과 NFS가 있고 요즘은 다 NFS 씀
+- 가상 메모리
+    - 스와핑: 실제 메모리와 가상메모리 왔다갔다 하는 것
+    많아지면 느려짐(병목현상), 보조메모리가 주메모리보다 느려서 → ZRAM(메모리 압축해서 용량 감소)
+    - fragmentation(단편화): 데이터를 담을 때 빈공간이 생기는 경우, 낭비되는 공간들
+    - paging: 8/16kB 사이즈로 공간 나눔 → 빈공간은 생기지만 찾기는 빠름 (ex. 서랍정리)
+    - garbage collector:
+- DRAM: 메모리 주소 변형이 일어남, 느림, RAM에 붙어있음
+- SRAM: 빠름, 비쌈, Cache에 붙어있음
+
+### 컴파일러
+
 | VM
 (JVM = java VM) | Virtual Machine/ Engine
 Runtime/ Environment | runtime: object code를 기계어로 바꾸는 과정
@@ -202,10 +231,10 @@ Runtime/ Environment | runtime: object code를 기계어로 바꾸는 과정
 - interpreter 언어: 실시간 한줄씩 통역, 상황에 따라 바뀔 수 있어서 유연성이 있음, AI 언어처럼
 - 두 언어 모두 compile을 하지만 컴파일 하는 방식이 다름
 - 대부분의 언어가 interpreter 언어로 바뀌고 있음 → 그래서 JVM라는 언어를 바꿔주는 VM이 필요함
-- java는 반반 가지고 있음
+    - java는 반반 가지고 있음
 
 - 절차형, 함수형 모두 객체지향 언어임, class를 함수로 가는 바로가기 링크라고 생각함면 됨
-    - 함수 → 함수 vs 생성자 함수: new f(); new를 붙여주면 생성자 함수
+    - 함수 → 함수 vs 생성자 함수: new f(); `new`를 붙여주면 생성자 함수
 - 절차형 언어: 대부분 compiler 언어, 명령형, 각본대로 진행, class/interface로 객체지향을 표현 (c는 class가 없기 때문에 객체지향이 아님)
     
     ```c
@@ -246,7 +275,7 @@ a.obj
 // 옮겨진 주소들을 다 전달받음
 i, j // stack에 있음
 
-node a.js  // 명령어 실행
+$> node a.js  // 명령어 실행
 // node = Engine + Runtime
 // a.js: 잠수함
 // engine: 잠수함 부품; console 등
@@ -287,39 +316,28 @@ b.obj
 - interface
     
     ```jsx
-    x = new 붕어빵();
+    x = new 붕어빵();  // new: 생성자 함수
     y = new 붕어빵();
     // x, y: 먹을 수 있는 거
     // 붕어빵(): x, y를 만들 수 있는 틀
-    
     ```
     
-- 
 
-### CMOS = ROM BIOS
+### Process vs Thread
 
-- CMOS → booting → window/mac
-- CMOS(ROM): 마더보드에 있는 메모리
-    - 몇기가, 코드 이것저것 담겨있음
-    - read only memory
-    - 비휘발성, 읽기만 가능
-- RAM
-    - random acess memory
-    - 휘발성
-- Kernel
-    - 펌웨어에 가까움 hw에 가까운 프로그램
-    - hw ↔ sw
-    - cmos에 있는 데이터를 memory(RAM)으로 가져옴
-    - 응용sw, 시스템 sw, 펌웨어, hw 를 다 control 함
-    - 미러링: c드라이브, d드라이브가 있을 때 c를 그대로 d로 복제 → c 메모리가 날라갈 경우를 대비
-    - 리눅스에는 FAT과 NFS가 있고 요즘은 다 NFS 씀
-- 가상 메모리
-    - 스와핑: 실제 메모리와 가상메모리 왔다갔다 하는 것
-    많아지면 느려짐(병목현상), 보조메모리가 주메모리보다 느려서 → ZRAM(메모리 압축해서 용량 감소)
-    - fragmentation(단편화): 데이터를 담을 때 빈공간이 생기는 경우, 낭비되는 공간들
-    - paging: 8/16kB 사이즈로 공간 나눔 → 빈공간은 생기지만 찾기는 빠름 (ex. 서랍정리)
-    - garbage collector:
-- DRAM: 메모리 주소 변형이 일어남, 느림, RAM에 붙어있음
-- SRAM: 빠름, 비쌈, Cache에 붙어있음
+- node 가 실행되면 process(cpu가 수행하는 연산) 형태로 있음
+clock이 구동되면 마더보드의 timer가 작동됨
+- **process**: cpu가 일하고 있는 것, cpu 갯수만큼 만들 수 있음
+- **thread**: 해야하는 일을 나눠서 여러개를 하는 것
+- 프로세스 방식이 더 빠르나 프로세스 개수를 늘리면 cpu가 여러개 필요함
+- 프로세스가 하나밖에 없으면 한개 일을 할때 반대쪽은 무조건 쉬어야함
+- shared memory를 둬서 thread를 처리
 
-### 컴파일러
+### IPC (Inter-Process/Thread Communication)
+
+프로세스들 사이에 서로 데이터를 주고받는 행위 또는 그에 대한 방법이나 경로
+
+### PCB(Process Control Block)
+
+- 프로세스 정보를 저장
+- **Context Switching** : 홍길동 ↔ 김길동, 캐시메모리에 저장
