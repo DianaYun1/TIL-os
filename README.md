@@ -1,5 +1,5 @@
 # Today I Learned(TIL)
-##[컴퓨터구조](https://github.com/Belluable/TIL/blob/master/Computer%20Architecture/ca.md)
+## [컴퓨터구조](https://github.com/Belluable/TIL/blob/master/Computer%20Architecture/ca.md)
 - 컴퓨터구조
     - cpu
     - register
