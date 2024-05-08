@@ -33,6 +33,14 @@ protocol: 컴퓨터 규약
 - 양자 컴퓨터: 데이터가 2진수가 아니어서 훨씬 빠름, 복호화도 빠름, 소수를 사용
 - 생각만 하는 느낌 ex. 물마시러 가야지
 - 실행은 메모리가 함
+- cpu 종류: CISC, RISC
+    - CISC : 명령어 길이가 가변적, hw 비중이 큼
+    장점: 컴파일러 작성 쉬움, 호환성 좋음
+    단점: 디코딩 오래걸림, 명령어 길이가 달라서 여러개 명령어 처리 어려움
+    - RISC: 고정된 명령어 길이 사용, sw 비중이 큼, 대표적으로 ARM
+    장점: 프로그램 짜기 힘듬, 속도 빠름, 여러개 명령어 처리 가능
+    단점: 명령길이 고정으로 코드효율 낮음
+    - 요즘은 각각의 장점을 합해서 사용하는 경우가 많음
 
 ### 레지스터(8개)
 
@@ -92,7 +100,7 @@ const c = 100;
 // const: 고정값, 상수 -> data 영역에 있음
 
 function add(a, b){
-	return a+b;
+    return a+b;
 }
 // 함수/명령어들도 메모리에 있어야 실행하니까 -> code 영역
 ```
@@ -168,7 +176,6 @@ b = a+3; // 메모리까지 가지 않고 누산기에 있는 a를 가져옴
     - 3.5세대 : python, js
 - Operation Code(4bit)
 - Operande(6*2 bit)
-- 
 
 ```c
 //operation code  operand
@@ -177,10 +184,6 @@ mv a     // 누산기에 a = 3 담음
 add a 2
 mv b     // 누산기에 b = 5
 ```
-
-- cpu 종류: CISC, RISC
-    - CISC
-    - RISC: 프로그램 짜기 힘듬, 속도 빠름
 
 ## OS
 
@@ -192,23 +195,34 @@ cpu가 이해할 수 있는 코드를 작성해야함
 
 반도체 판 안에 다 os가 있음  ex. imbeded linux, android, chronium(키오스크) 등
 
+os runtime: 실행, node v22, chrome
+
+os engine: 실행 환경, ecma2021
+
+runtime이 engine을 품고 있음
+
+ex. JVM ; JDK(library) JRE(java runtime)
+
 ### CMOS = ROM BIOS
 
 - CMOS → booting → window/mac
 - CMOS(ROM): 마더보드에 있는 메모리
-    - 몇기가, 코드 이것저것 담겨있음
     - read only memory
     - 비휘발성, 읽기만 가능
+    - hw 정보들: 몇기가, 키보드, 비디오/사운드 카드, gpu 정보 등이것저것 담겨있음
 - RAM
     - random acess memory
     - 휘발성
 - Kernel
     - 펌웨어에 가까움 hw에 가까운 프로그램
+    - hw를 컨트롤 하기 위한 os의 engine
     - hw ↔ sw
     - cmos에 있는 데이터를 memory(RAM)으로 가져옴
     - 응용sw, 시스템 sw, 펌웨어, hw 를 다 control 함
     - 미러링: c드라이브, d드라이브가 있을 때 c를 그대로 d로 복제 → c 메모리가 날라갈 경우를 대비
     - 리눅스에는 FAT과 NFS가 있고 요즘은 다 NFS 씀
+        - 서버형 리눅스: RedHat(유료; 기업에서 사용), CentOS(개발자가 다 관리해야함), PC형 리눅스: Ubunto
+        - WSL(window server linux): linux 명령어를 실행시킴 → 실행시킬 linux kernel이 필요함
 - 가상 메모리
     - 스와핑: 실제 메모리와 가상메모리 왔다갔다 하는 것
     많아지면 느려짐(병목현상), 보조메모리가 주메모리보다 느려서 → ZRAM(메모리 압축해서 용량 감소)
@@ -218,7 +232,7 @@ cpu가 이해할 수 있는 코드를 작성해야함
 - DRAM: 메모리 주소 변형이 일어남, 느림, RAM에 붙어있음
 - SRAM: 빠름, 비쌈, Cache에 붙어있음
 
-### 컴파일러
+### VM/Engine 과 Runtime/Environment
 
 | VM
 (JVM = java VM) | Virtual Machine/ Engine
@@ -227,11 +241,16 @@ Runtime/ Environment | runtime: object code를 기계어로 바꾸는 과정
 | --- | --- | --- |
 | OS |  |  |
 | HW |  |  |
-- complier 언어: 한번에 전체 통역
+
+**compiler vs interpreter**
+
+- compiler 언어: 한번에 전체 통역
 - interpreter 언어: 실시간 한줄씩 통역, 상황에 따라 바뀔 수 있어서 유연성이 있음, AI 언어처럼
 - 두 언어 모두 compile을 하지만 컴파일 하는 방식이 다름
 - 대부분의 언어가 interpreter 언어로 바뀌고 있음 → 그래서 JVM라는 언어를 바꿔주는 VM이 필요함
     - java는 반반 가지고 있음
+
+**절차형 언어 vs 함수형 언어**
 
 - 절차형, 함수형 모두 객체지향 언어임, class를 함수로 가는 바로가기 링크라고 생각함면 됨
     - 함수 → 함수 vs 생성자 함수: new f(); `new`를 붙여주면 생성자 함수
@@ -239,21 +258,22 @@ Runtime/ Environment | runtime: object code를 기계어로 바꾸는 과정
     
     ```c
     for(i=1, 100, i++)
-    	if (i%2 == 1)
-    		더해
-    		
+        if (i%2 == 1)
+            더해
+            
     1. 물 끓여
     2. 스프 넣어
     3. 면 넣어
     4. 계란 넣어
     ```
     
+
 - 함수형 언어: 대부분 interpreter 언어, 선언형, 만들기 어럽지만 수정이 용이함, 함수로 객체지향을 표현
     
     ```c
     loop(i=1, 100, i++)
-    	더해 if (i%2 == 1) // 더해 뒤를 상황에 따라 바꿀 수 있음
-    	
+        더해 if (i%2 == 1) // 더해 뒤를 상황에 따라 바꿀 수 있음
+        
     넣어 (스프)
     넣어 (면) -> 넣어 (반 쪼개 면) -> 반 쪼개라는 함수도 만들 수 있음
     => x = g(넣어, 반, 넣어)
@@ -341,3 +361,291 @@ clock이 구동되면 마더보드의 timer가 작동됨
 
 - 프로세스 정보를 저장
 - **Context Switching** : 홍길동 ↔ 김길동, 캐시메모리에 저장
+프로세스1 ↔ 프로세스2(프로세스 2개 일때), 스레드1 ↔ 스레드2(프로세스 1개일 때)
+
+### section
+
+| section | track을 나눠 놓은 것
+linux는 inode라는 파일 트리가 있음(전체 묶음을 기억함)
+C: - p, d - e - f - a.js ⇒ p, d가 section, a.js가 block
+linux는 inode(트리)가 커지면 파일 검색 시간이 오래걸림 (ulimit -a: 만들 수 있는 프로세스 수 제한돼있음) |
+| --- | --- |
+| track | 지금은 안씀, LP판 느낌
+window는 각 시작지점 인덱스를 가지고 track으로 찾아감
+* ssd: 트랙의 맨 앞쪽을 먼저 쭉 탐색 → 빠름 (게임엔진들, window기반 개발하기 때문) |
+| block |  |
+| page |  |
+
+![ca_3](ca/3.png)
+
+### 컴파일러 동작
+
+```jsx
+func add(a, b){  // 
+    return a+b;  // a, b: parameter, 변수
+    // 함수lexical(여기에 y가 나오면 아래와 같은 전역lexical: 함수안에 y가 나오지 않기 때문에)
+}
+
+var x = add(1, 2);  // x: argument, 변수, 인자, 전역lexical
+const y = 100;  // y: 상수, 변수 // java에서 상수: final
+```
+
+함수 선언문 안에 있으면 argument
+
+```jsx
+쓰레기 메모리를 싫어하므로 undefined가 담겼다가 값이 주어지면 메모리를 잡음
+
+var x;  // undefined
+var a = 1;  
+// undefined -> 8B (정수일지 실수일지 모르니까 크게 잡음)
+// var = a;  -> a = 1; 이 순서로 작동/컴파일 됨
+```
+
+1. Lexical Analyzer
+    - Lexical: 분야, 영역 (대화 환경) → 점심인지 저녁인지, 수학인지 컴퓨터인지 알아야 같은 변수명이어도 다른 메모리에 할당하니까
+        - scope는 lexical에 종속 돼있음 (lexical > scope)
+        - 함수 lexical에 선언되지 않은 변수는 전역 scope에서 찾음
+        - lexical scope란? 블로그 [참조1](https://jake-seo-dev.tistory.com/180) [참조2](https://cosanam.com/posts/그놈의-lexical-어떻게-이해하면-좋을까/)
+        - scope: 영역
+            
+            
+            | global scope |  |
+            | --- | --- |
+            | function |  |
+            | block | if block scope |
+    - Tokenizer: 하나하나 잘라냄 (띄어쓰기)
+    - Lexer가 symbol(=token)을 만듬 (ex. var-equal-1, interpreter 언어는 =이후는 자르지 않음 literal로 파악함)
+2. Syntax Analyzer(parser): 트리 그림
+    - token(parsing) tree (TypeScript에서는 Symbol table)
+    
+    ```jsx
+    var c = a+b;
+    //   var
+    // c    eq
+    //     plus
+    //    a    b
+    ```
+    
+3. Intermediate code generator
+    - 링킹을 할 준비가 됨
+    - type checking을 하는 이유: int i =0; 이 합당하냐/ int i=0.5;(x)
+4. Code optimizer
+    - 필요없는 변수는 메모리(트리)에서 지움, 계산에 쓰이지 않는 변수 같은거
+    - stack에 올라갈 수 있는 데이터: premety type 이면 복사를 해둠
+    - 스케줄링: 어떤 순서로 실행할건지 판단
+5. Target code generator
+    - 조합
+
+### charset
+
+- 한글은 3B, 영어 1B
+- 전세계 언어 변환(encoding): UTF-8 (3B 이하는 다 표현 가능), UTF-8mb4 (4B까지 표현 가능)
+- ASCII: A=65 이런식으로 256까지 채우면 1B
+2B에는 한글을 다 담기 어려워서 한글은 3B(2^24)
+- encoding: charset이 다른 코드로 바꾸는 것 (ex. 컴퓨터가 읽을 수 있는 수)
+- decoding: code → symbol
+
+### collation
+
+- 언어에 맞는 정렬을 사용함
+
+## 프로그램 언어 구성 요소
+
+![ca_4](ca/4.png)
+
+### 변수 vs 상수
+
+```jsx
+var i = 1;  // stack에 8B 줌
+var s = 'abc';  // heap에 임의로 줌
+
+console.log(a);  // s: argument, primitive타입(원시값, 그 자체가 값)
+console.log(s);  // &: 주소불러옴 참조형, reference 타입
+```
+
+Q. call by value와 call by reference의 차이점?
+
+call by value - stack에 있고
+
+call by reference - heap에 있다 그래서 stack에 있는 주소를 참조합니다.
+
+### 식별자, 예약어
+
+- 식별자: 변수, 함수 등, 함수를 구분하는 것
+
+```jsx
+var var=1; // 예약어로 변수명 생성 안됨
+```
+
+### 객체
+
+- 무한대로 늘어나는 건 다 heap에 존재함
+- 문자열, 배열
+- 명사와 동사의 조합이다
+- call by reference, heap에 존재
+- this: 내 heap의 메모리 주소
+    
+    ```jsx
+    max = new Dog();
+    // max는 stack에 &500번지로 가라 -> 500번지 가면 name, age 등 써있음 -> 이런게 써있는 박스를 this라고 칭함
+    
+    this.name;
+    this,age; // this는 나만 가능함!! max만 가능
+    max.name;
+    max.age;
+    
+    public  // js는 default가 public
+    private // 대부분 default -> public으로 풀어줘야함
+    ```
+    
+- 모든 객체는 public 과 private이 있음
+- linked list: 계속 찾아가는 link되는 것들
+max.name→ &500 → stack에서 500번지 name 찾음 → name은 문자열이니까 stack에 저장 못하므로 &700를 참조 해놓음 → heap에 700번지 또 찾아감 → …
+
+**primitive 타입 특징**
+
+- 실제값 stack에 존재, reference의 주소를 가지고 있음
+- stack은 쑤셔넣는거 싫어함 → 값이 할당될 때 무조건 나만의 공간을 새로 만듦, 원래 주소와 연결 끊김
+- 처음 받은 값이 그대로 유지
+- value라 부름, object(x) (세상 모든 것은 object 그치만 primitive 빼고)
+
+```jsx
+arr = [1, 2, 'abc'];
+y = arr[0];     // y = 1
+arr[0] = 100;   // y = 1
+z = arr[2];     // z = 'abc'  &700을 기억하고 있음
+arr[2] = 'de';  // z = 'de'
+```
+
+**reference 타입 특징**
+
+- 실제값 heap에 존재
+- 주소값을 가져오기 때문에 주소에 들은 값이 바뀌면 할당된 값도 바뀜
+- 주소와 계속 연결돼있음
+
+**garbage collector(GC)** 
+
+- 아무도 사용하지 않는 메모리 = garbage → 단편화가 생김
+- 이것도 무조건 새로 생김
+- cpu, memory가 한가할때
+- shift하면 값-주소 연결을 강제로 끊을 수 있음
+
+### 바인딩, 할당
+
+**바인딩**
+
+- reference 타입에만 바인딩을 함
+- this의 메모리 주소의 값을 다른걸로 바꾸는 것
+
+```jsx
+sam = max; // 이때를 바인딩이라고 함, 같은 heap을 공유, 둘 다 &700
+// sam이라는 변수에 max를 할당했어
+```
+
+```jsx
+f(){
+    return this.name;
+}
+
+f();  // this에 들은게 없으니까 undefined
+
+f.bind(max);  // 너의 혼은 max야 : max lexical 
+f();  // this -> max
+```
+
+- currying 코드: 재사용성 용이 (ex. 다크모드/라이트모드)
+currying의 한 방법이 binding
+
+```jsx
+// this만 달라지는 거니까 바인딩을 사용하면 코드는 얼마든지 재사용 가능
+background = this.bgColor;
+foreground = this.fgColor;
+f.bind(Dark);
+f.bind(Light);
+```
+
+**할당(assignemt)**
+
+- 메모리에 값을 담았다
+- 아예 값을 바꿔버림
+
+```jsx
+f = max;  // f 주소가 &700으로 바껴버림 -> 그럼 f는 사라짐
+```
+
+### 선언 vs 정의
+
+**선언**
+
+- 값 할당 x, 선언만
+- 메모리에 i라는 공간 생성
+- 메모리 공간을 만들어주는 것
+- stack에 자리 잡는 것
+
+**정의**
+
+- 첫번째 Store → 그 다음부터는 할당
+- 메모리에 값을 최초로 한 번 담는 것 = 메모리 할당
+- stack이든 heap 이든
+
+```jsx
+// interpreter
+var i = 1;  // 선언 + 정의
+var i;  // 선언+정의, i에는 undefined -> var i = undefined; 와 같음 따라서 정의까지 된거야
+i = 1;  // 정의
+cㄱ
+// C언어
+int i = 0;  // 선언 + 정의
+int i;  // 선언, i에 garbage 값 들어가있음
+i = 0;  // 정의
+
+mov 1 i  // 선언 + 정의
+Load i  // 선언
+Store 1  // 정의, 실제로 돌아갈 때 (컴파일/실행 될 때)
+
+// 함수형
+Load i  // 선언
+Store undefined  // 정의, 돌아가기 전까지
+```
+
+### statement, expression → literal
+
+**statement**
+
+- cpu가 한 번 연산하는 단위 (ex. 1+2)
+- 연산할게 없으면 statement가 아님
+
+```jsx
+// 한 문장문장이 statement
+a = 1;  // a: 식벽자, 1: literal
+b = 2;
+c = a + b;
+
+f = func(){}  // 함수 선언문
+```
+
+**expression**
+
+- 값이 있는 식 = literal이 있는 것
+- statement와 expression이 같을수도 있음
+
+```jsx
+f;  // f가 literal이니까 expression임, ;이 있어도 statement는 아님
+f = func(){}  //func(){}가 object 이므로 표현식
+```
+
+**literal**
+
+- 값 (object, value)
+
+### 조건문, 반복문
+
+```jsx
+//조건문
+if (a===1)
+
+//반복문
+while(a>0) {
+    a = a-1;
+}
+```
