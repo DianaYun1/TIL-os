@@ -1,4 +1,4 @@
-# Git 0714-
+# Git
 
 ## Git ⭐
 
@@ -8,6 +8,19 @@
 - 협업이 목적
 - TIL(Today I Learned): 오늘 배운 내용 정리
     - 마크다운으로 정리
+
+| working directory |  |
+| --- | --- |
+| git add | untracked → tracked |
+| staging area | 임시 저장공간, staged, tracked
+파일이 삭제되고 commit 되기 전까지 트랙킹함 |
+| git commit |  |
+| git repository | local/ remote |
+| git push | git server에 올림 |
+| git pull | server거 가져옴 |
+| server |  |
+
+Q. 충돌시에 어떻게 작동되나?
 
 ### Working Directory
 
@@ -91,6 +104,144 @@
     자세한 내용
     
     </aside>
+
+### commit
+
+공간상/db 저장
+
+```bash
+git add .
+git commit -m "commit"
+git commit -am "commit"  # add, commit 한번에
+```
+
+### restore
+
+- rollback, rm 취소
+- rm —cache : 메모리에서만 제거, untracked, commit해야만 완전히 삭제됨
+- tracked → `rm --cache` → untraked(WD) & deleted(stage)
+→ `restore --staged` → unmodified(stage), 원위치(취소됨)
+
+```bash
+# unstaged
+git rm a.js --cache   # 메모리에서만 삭제, cache 안붙이면 완전 삭제됨
+
+# untracked (rollback)
+git add a.js
+git restore a.js
+
+git push -u origin master/main  # -u: upstream
+
+git ls-files  # git이 관리해주는 파일
+```
+
+### branch
+
+- default branch: 나무의 메인 줄기 = master = main
+- 독립적인 작업공간을 만들기 위해 사용함
+- checkout: 가지 하나 치는거
+- commit id는 branch 단위
+
+```bash
+git branch  # 브랜치 확인
+
+# 브랜치 생성
+git branch A  # 브랜치 만들기
+git branch user-auth  # 자주 쓰는 이름 (auth: 가입, 인증)
+git checkout A  # 브랜치 이동
+git switch A
+git checkout -  # 이전 브랜치
+git checkout -b B  # B 생성 후 이동
+git switch -c C  # C 생성 후 이동
+
+# add & commit
+git push origin A
+git branch -v  # 커밋 당시 마스터브랜치의 commit ID 확인 가능
+git branch -r  # remote
+git branch -a  # local + remote
+git log A
+
+# remote
+git remote -v  # 원격 저장소 링크 + tracking
+git remote show origin  # 링크 + 정보
+git branch -avr
+
+# 브랜치 삭제
+git branch -d A
+git branch -D A
+git push origin --delete A
+git fetch -p  # 다른 폴더에서는 fetch -p 해야 적용됨
+```
+
+### stash
+
+- 작업 중에 긴급 수정사항이 있을 때, commit 못할 때
+
+```bash
+git stash save  # 작업중인걸 임시저장
+git stash list  # stash 목록
+git stash show  # stash log
+git stash pop  # LIFO, auto-merge
+git stash drop  # stash 취소 충돌 시 삭제안된 내역까지 삭제
+
+# 현재 작업중인 내역으로 새로운 브랜치 생성
+git stash branch st1  # stash로 st1 만듦
+
+# 특정 작업중 상태로 복원
+git stash apply stash@{0}  # label 상태로 복원
+git stash drop stash@{0}  # 특정 stash 삭제
+```
+
+### git clean
+
+- untracked file 삭제
+
+```bash
+git clean -n  # 내역 확인
+git clean -d  # untracked file 지우기
+git clean -df  # 무조건 지우기
+git clean -di  # ignore file 외 untracked 모두 삭제
+git clean -x  # ignore file도 삭제
+git clean -X  # ignore file만 삭제
+```
+
+### merge
+
+| Fast-Forward merge | 시간 흐름대로 커밋 내용 병합, 충돌 없이 100% auto-merge |
+| --- | --- |
+| 3-Way merge |  2개 이상 브랜치로 파생된 커밋 병합, 충돌 가능 |
+| Rebase | 내가 수정중인 작업 빼고 다 master로 가져오는 거 |
+
+```bash
+# fast-forward merge
+git merge br11
+
+# 3-way merge
+git merge feature [-e | --edit]
+
+# rebase
+git rebase master
+git add -A
+git rebase --continue
+```
+
+### reset
+
+- revert : commit 이력을 남기기 위해서, 소스코드는 돌아가지만 commit은 유지
+
+```bash
+# reset
+git reset --soft HEAD~1  # soft: 소스 파일은 안바뀌고 commit한 것만 취소됨
+git reset --hard HEAD~1  # hard: 소스 내용까지 다 돌아감
+git reset --mixed HEAD~1  # Work Directory까지 수정됨
+
+# revert
+git revert HEAD
+
+# commit message 바꾸기
+git commit --amend -m 'xx'
+```
+
 
 
 ## Gitlab/Github/Bitbucket
