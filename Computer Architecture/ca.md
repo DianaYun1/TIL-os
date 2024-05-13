@@ -50,6 +50,7 @@ protocol: 컴퓨터 규약
 - program counter: 명령어가 실행될때 다음에 해야하는 행동을 알려줌
 - address register
 - flag register: 0/1 표현
+- buffer register: 임시로 담아둘 데이터
 
 ### 캐시메모리
 
@@ -373,15 +374,38 @@ linux는 inode(트리)가 커지면 파일 검색 시간이 오래걸림 (ulimit
 | track | 지금은 안씀, LP판 느낌
 window는 각 시작지점 인덱스를 가지고 track으로 찾아감
 * ssd: 트랙의 맨 앞쪽을 먼저 쭉 탐색 → 빠름 (게임엔진들, window기반 개발하기 때문) |
-| block |  |
-| page |  |
+| block | 데이터를 그룹핑 해놓은 것 |
+| page | 최소한의 단위 (ex. 접시에 담아 한번에 옮기는 단위)
+db는 기본 16kB(데이터 옮기기 가장 좋은 단위) |
+| buffer | 데이터를 퍼서 보내고 새 바가지에 또 새로 보내고 (ex. 바가지)
+버퍼사이즈: 내맘대로 정할 수 있는 사이즈 |
 
 ![ca_3](ca/3.png)
+
+### page와 buffer
+
+- 파일을 읽고 쓸 때 바가지를 이용하면 buffer, 안쓰고 바다에 부어버리면 버퍼는 없음
+- 메모리를 적게 사용하니까 좋음
+- 대부분 buffer size = page size
+- *pipe: 내가 푼거를 바로  ??*
+- ex. 넷플릭스 스트리밍할때 영화를 불러오는 과정 (영화 파일 하나 크기가 너무 크니까 page 단위로 나눠놓고 buffer를 이용해 불러옴)
+    - 스트리밍: 임시 폴더에 임시 파일을 만듦 → 1~10 줄세우는 작업 → 플레이 시작 → 11~20 줄세우기 → 플레이 → …
+    - 다운로드: 여러명한테 쭉 받음 → 100% 찍으면 잠깐 추는 현상 = 파일 정리중
+
+### TCP/IP와 UDP
+
+- TCP/IP: 파일이 내려올 때 넘버링을 해줌, 스트리밍, 다운로드, 수신 확인까지 함
+- UDP: 주세요 하면 주고 너가 받는 안받는 신경 안씀, 빠름, 파일 수신 보장 안됨
+
+### ARC와 NARC (컴네)
+
+- 소켓 통신 할때 필요함
+- 요즘: 웹소켓이 있어서 필요 없어짐
 
 ### 컴파일러 동작
 
 ```jsx
-func add(a, b){  // 
+function add(a, b){  // 
     return a+b;  // a, b: parameter, 변수
     // 함수lexical(여기에 y가 나오면 아래와 같은 전역lexical: 함수안에 y가 나오지 않기 때문에)
 }
@@ -578,7 +602,7 @@ f = max;  // f 주소가 &700으로 바껴버림 -> 그럼 f는 사라짐
 **선언**
 
 - 값 할당 x, 선언만
-- 메모리에 i라는 공간 생성
+- 메모리에 i라는 공간 생성, 확보 (int면 4B)
 - 메모리 공간을 만들어주는 것
 - stack에 자리 잡는 것
 
@@ -589,16 +613,17 @@ f = max;  // f 주소가 &700으로 바껴버림 -> 그럼 f는 사라짐
 - stack이든 heap 이든
 
 ```jsx
-// interpreter
-var i = 1;  // 선언 + 정의
-var i;  // 선언+정의, i에는 undefined -> var i = undefined; 와 같음 따라서 정의까지 된거야
-i = 1;  // 정의
-cㄱ
-// C언어
+// C, Java
 int i = 0;  // 선언 + 정의
 int i;  // 선언, i에 garbage 값 들어가있음
 i = 0;  // 정의
 
+// interpreter
+var i = 1;  // 선언 + 정의
+var i;  // 선언+정의, i에는 undefined -> var i = undefined; 와 같음 따라서 정의까지 된거야
+i = 1;  // 정의
+
+// 절차형
 mov 1 i  // 선언 + 정의
 Load i  // 선언
 Store 1  // 정의, 실제로 돌아갈 때 (컴파일/실행 될 때)
@@ -649,3 +674,185 @@ while(a>0) {
     a = a-1;
 }
 ```
+
+- Sync (동기):
+- Async (비동기):
+- closure: 함수형 프로그래밍의 기법, js 단골 질문
+
+### block vs non-block
+
+I/O 장치는 os를 통해 kernel이 동작시킴
+
+- block: 기다려, a거 끝나기 전까지 b 대기
+- non-block i/o: 병렬처리, 나한테 요청이 왔는데 통장이 2개니까 transaction이 2개여서 하나는 다른 사람(프로세스, 스레드, os, kernel)한테 시킴 → 내 할 일 다 하고 시켰던 일 다시 돌아옴(=callback) → 손님한테 다시 줌 ; 일할 사람이 또 있다는 전제가 깔려있음
+- Task Queue: 일 끝나면 내 접시들에 둬, 일처리 끝난 순서대로 확인
+- Event Loop: 반복해서 queue에 끝난게 있는지 없는지 확인
+- Event Listner: 이벤트가 있는지 확인 (ex. click이 있으면 f()를 실행해줘
+
+### Transaction
+
+- transaction: (시점이 중요) 빼기하기 전까지 다른 모든걸 block하는 과정
+ex. 10원에서 5원을 출금하려했는데 출금하는 와중에 계좌이체 10원 뺐어 → 그럼 5월 출금하는 걸 block하는 것
+10월에서 5원 출금해서 통장에 찍히기 전까지는 -5가 메모리에만 담겨있음, 쓰기 전까지 취소가능
+- 한 통장에 하나의 transaction = one-phase-commit = 무결성
+- rollback: 과정 취소 (ex. 통장에 안쓰고 취소했어)
+- commit: 통장에 찍었어
+
+- stack: LIFO
+- queue: FIFO
+- call stack: 핵심 엔진 (런타임, 엔진을 구동)
+용량 한계가 있어서 stack overflow가 생김
+    
+    ```jsx
+    function add(a, b){
+        return a+b;
+    }
+    const x = add(1, 2);  // =:할당연산자
+    // stack 연산 수행: x, =, add 순으로 넣고
+    // add연산부터 pop해서 수행
+    ```
+    
+
+### 함수와 메소드
+
+- method: class 안에 있는 함수들
+
+### 클래스와 객체
+
+Q. ???
+
+A. 클래스는 object 클래스를 상속받은 것이다
+
+Q. 그럼 인스턴스와 클래스의 차이는?
+
+- 객체지향: 상속, 가장 상위 부모: Object (모든 객체는 Object에 상속됨)
+ex. 부모: dog, 자식: 리트리버 ⇒ dog ← 리트리버 (상속관계)
+리트리버를 만들면 dog을 상속 받은거기 때문에 dog의 속성과 리트리버 속성을 모두 가지고 있으므로 리트리버가 더 큼
+
+```jsx
+class Dog(){    // 여기서 Dog도 객체, 뒤에 extends 0bject가 생략됨
+    getName();
+    return this.name;
+}
+max = new Dog();
+```
+
+- primitive 빼고는 다 객체
+- 객체는 다 call by reference
+
+```jsx
+// js에서 객체를 표현하는 방법, json 타입을 사용함
+max = {
+    id = 1,
+    name = 'Max',
+    age = 10,
+};
+```
+
+### 실행 컨택스트
+
+- runtime:
+- context: 실행 구역
+
+### Lexical scope
+
+lexical 
+
+scope: 전역, 함수, block({} 있는 것)
+
+---
+
+### Network
+
+**Port**
+
+- 도메인을 생각해보면 네이버 80번 포트(http) → 443포트(https) 으로 이동
+- 21,22,23번은 os가 사용
+
+**Firewall**: 방화벽
+
+- 포트 가기 전에 있음
+- 외부에서 포트 서버로 들어갈 때 방화벽에서 열어줘야 들어갈 수 있음
+
+WS: 정적인 파일들 줌
+
+was가 db읽어서 연산 후 ws에게 줌
+
+LAN카드 마다 MacAddress가 있음
+
+공유기 → ip 주소 → mac 주소 → 포트 연결
+
+카톡은 소켓으로 연결돼 있고 채팅 창 생길 때마가 새 포트가 생김
+
+### Server
+
+서버를 VM1, VM2, VM3으로 쪼개고 각각 메모리,cpu 등 다 나누고 네트워크 카드를 꼽음
+
+그러면 각각 os를 설치할 수 있게됨 → 결국 3개의 다른 컴퓨터 느낌
+
+os가 쓰는 메모리가 크기 때문에 내가 쓸 수 있는 메모리가 적어짐
+
+그럼 os를 안깔면 안돼?
+
+나 메모리 부족한데 cpu 나눠주면 안돼? 안돼. 그럼 새로 다시 설치해야함
+
+**container(Docker)**: VM보다 유리함 
+
+VM1 : ws - nginx필요함
+
+VM2 : sql
+
+VM3 : chat
+
+container를 필요에 따라 만들어서 필요한 vm에 나눠줌
+
+container가 많아지면 n 명한테 줄 수 있음 = **Cloud**
+
+ex. 서버 임대도 가능 (ex. 블랙프라이데이 때 쇼핑몰들)
+
+- 장점: 비용 절감
+- 단점: 컨테이너가 많아지면 원래 cpu 1 주던 걸 0.5만 줌
+
+### Cloud
+
+| IaaS | Infra |  |
+| --- | --- | --- |
+| PaaS | Platform | 컨테이너들이 플랫폼 역할
+ex. DevOps, 서버에서 도는 게임, ms365 |
+| SaaS | Software | google apps, 브라우저 |
+- onDemand: 윈도우 하나 클라우드에 설치해주세요, IDC에 있는 서버를 사서 쓰는거
+- onPremise: 내 컴퓨터에 설치해주세요 : 우리집에 있는 서버에 설치 ex. 은행권, 대기업 서버실: 데이터 센터 있고 도커들 잔뜩 띄워둠
+- cloud를 하는 이유: 바쁜 날들 빼고는 서버실을 쓸 일이 없어서 대여 사업을 시작함
+    - 아마존: 우리나라에서 kt cloud의 서버실 한칸을 대여해서 씀, 복구 시간이 빠름
+    - kt: 복구 시간이 오래걸려서 기업 이미지 하락함 잘 안팔려서 아마존에 대여 해줌
+
+### Library/Framework
+
+**Library**
+
+- 단순한 함수들의 집합
+
+**Framework**
+
+- aws, db, log, filter… 이런 기능들을 가지고 있어야 함 (ex. spring, nest)
+- FE: 화면 전환(라우팅), component(한군데 작성해서 여러군데 쓰자 ex. 버튼, 종이컵; 레이블과 컬럼만 다르면 됨) → atomic component (더이상 작아직 수 없는 component)
+    
+    ps. React는 라우팅을 스스로 못해서 따로 라우터가 있음
+    
+- BE:
+
+라우팅을 worker에 해줘야함
+
+### Clean Architecture
+
+객체지향 solid 등 다양한 기법들이 있음
+
+### messaging queue
+
+- 메세지 처리가 바쁠때 큐에 넣어놓고 하나씩 처리
+- ex. 티켓팅할때 앞에 몇명 있습니다. = 큐에 들어감
+- 화면만 바꾸고 큐에 담아둠
+
+**쿠버네티스**: 도커를 오케이션함 (어떤 컨테이너가 빠쁘고 한가한지 알아서 cpu를 나눠주는 툴)
+
+**kafuka**: 메세징 큐 컨트롤
