@@ -40,6 +40,7 @@ Q. stage와 repository의 차이?
 - remote repository(git server) 때매, 공동작업
 - history가 중요하기 때문에 diff를 떠볼 수 있음
 
+
 **Working Directory**
 
 - 내가 작업하고 있는 **실제 디렉토리**
