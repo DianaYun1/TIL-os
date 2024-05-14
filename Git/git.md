@@ -2,37 +2,55 @@
 
 ## Git ⭐
 
+- [공식문서](https://git-scm.com/book/ko/v2/Git-브랜치-브랜치란-무엇인가)
 - 분산 버전 관리 프로그램
+- Linux 만든 사람이 만들어서 bash를 사용하면 모든 linux 환경에서 접근 가능
 - 최종 파일 1개 + 변경사항만 저장한 파일 여러개
 - 하나 터져도 복구 가능
 - 협업이 목적
 - TIL(Today I Learned): 오늘 배운 내용 정리
     - 마크다운으로 정리
 
-| working directory |  |
-| --- | --- |
-| git add | untracked → tracked |
-| staging area | 임시 저장공간, staged, tracked
+### Git structure
+
+![git_3](git/3.png)
+
+![git_4](git/4.png)
+
+| git structure | 실행 코드 | 상태 |
+| --- | --- | --- |
+| working directory |  |  |
+|  | git add | untracked → tracked |
+| staging area |  | 임시 저장공간, staged, tracked
 파일이 삭제되고 commit 되기 전까지 트랙킹함 |
-| git commit |  |
-| git repository | local/ remote |
-| git push | git server에 올림 |
-| git pull | server거 가져옴 |
-| server |  |
+|  | git commit | commit 전까지는 메모리에만 있음 (ex. 생각만) |
+| git repository |  | local/ remote, 실제 저장공간 |
+|  | git push | git server에 올림 |
+|  | git pull | server거 가져옴 |
+| server |  | ex. github |
 
 Q. 충돌시에 어떻게 작동되나?
 
-### Working Directory
+- [블로그 참조](https://techblog.lotteon.com/git-브랜치를-머지할-때-충돌이-발생할-수-있는-사례-d72a21c520a5)
+
+Q. stage와 repository의 차이?
+
+- stage: 작업본, repository: 최종본
+- 실수로 전송/충돌 방지
+- remote repository(git server) 때매, 공동작업
+- history가 중요하기 때문에 diff를 떠볼 수 있음
+
+**Working Directory**
 
 - 내가 작업하고 있는 **실제 디렉토리**
 
-### Staging Area
+**Staging Area**
 
 - **커밋**으로 남기고 싶은, **특정 버전**으로 관리하고 싶은 파일이 있는 곳
 - 잠깐 머무는 곳
 - 다 저장하면 크기가 커지니까
 
-### Repository
+**Repository**
 
 - 특정 디렉토리를 버전 관리하는 저장소
 - **커밋**들이 저장되는 곳
@@ -105,42 +123,66 @@ Q. 충돌시에 어떻게 작동되나?
     
     </aside>
 
+
 ### commit
 
-공간상/db 저장
+- 공간상/db에 저장
 
 ```bash
 git add .
 git commit -m "commit"
-git commit -am "commit"  # add, commit 한번에
-```
+git commit -am "commit"  # add(등록된,tracked된 애들만), commit 한번에
 
-### restore
-
-- rollback, rm 취소
-- rm —cache : 메모리에서만 제거, untracked, commit해야만 완전히 삭제됨
-- tracked → `rm --cache` → untraked(WD) & deleted(stage)
-→ `restore --staged` → unmodified(stage), 원위치(취소됨)
-
-```bash
-# unstaged
-git rm a.js --cache   # 메모리에서만 삭제, cache 안붙이면 완전 삭제됨
-
-# untracked (rollback)
-git add a.js
-git restore a.js
-
+# push
 git push -u origin master/main  # -u: upstream
 
-git ls-files  # git이 관리해주는 파일
+# file 보기
+git ls-files  # git이 관리해주는 파일, tracked된 파일들
+git ls-files -u  # conflict 난 파일 보여줌
+
+# diff
+git diff --name-only  # diff for HEAD
+git diff HEAD~1  # 이전 커밋과의 차이
+
+# 서버와 연결된 repo 끊기
+git remote rm origin
 ```
+
+
+### restore(unstaged) VS rm(untracked)
+
+- restore: rollback, rm 취소
+- rm —cache : 메모리에서만 제거, untracked, WD에만 있음, commit해야만 완전히 삭제됨
+- tracked → `rm --cache` → untraked(WD) & deleted(stage)
+→ `restore --staged` → unmodified(stage), 원위치(취소됨)
+- modified: unstaged = WD로 갔다/ tracked는 돼있음(등록돼있으니까)
+- diff를 다 모으면 WD 상태
+
+```bash
+# untracked
+git rm a.js  # cache 안붙이면 완전 삭제됨
+git rm a.js --cache   # 파일 원본 유지, 메모리에서만 삭제
+
+# unstaged (rollback)
+git add a.js
+git restore a.js
+```
+
+Q. remove VS clean
+
+- rm: tracked → untracked
+- clean: untracked 된 애들을 지움
+    - 안쓰는 파일이지만 남아있어야하면 gitignore를 사용해서 clean에서 제외
+
 
 ### branch
 
 - default branch: 나무의 메인 줄기 = master = main
 - 독립적인 작업공간을 만들기 위해 사용함
+- 특정 버전: 브랜치 딸때의 버전 그대로 가져옴, 버전 고를 수 있음(HEAD~1)
 - checkout: 가지 하나 치는거
 - commit id는 branch 단위
+- master: 배포용(push는 여기서) - develop - A,B
 
 ```bash
 git branch  # 브랜치 확인
@@ -171,11 +213,17 @@ git branch -d A
 git branch -D A
 git push origin --delete A
 git fetch -p  # 다른 폴더에서는 fetch -p 해야 적용됨
+
+git branch --no-merged  # branch에서 commit 후 merge 필수
 ```
+
 
 ### stash
 
-- 작업 중에 긴급 수정사항이 있을 때, commit 못할 때
+- 작업 중에 긴급 수정사항이 있을 때, commit 못할 때 stash에 임시 저장해둠
+- .tmp - 컴퓨터 껐다켜도 남아있어야하니까
+- 혼자 작업할 때 많이 씀
+- 여럿이 작업: branch
 
 ```bash
 git stash save  # 작업중인걸 임시저장
@@ -192,6 +240,7 @@ git stash apply stash@{0}  # label 상태로 복원
 git stash drop stash@{0}  # 특정 stash 삭제
 ```
 
+
 ### git clean
 
 - untracked file 삭제
@@ -205,11 +254,13 @@ git clean -x  # ignore file도 삭제
 git clean -X  # ignore file만 삭제
 ```
 
+
 ### merge
 
-| Fast-Forward merge | 시간 흐름대로 커밋 내용 병합, 충돌 없이 100% auto-merge |
+| merge | 내용 |
 | --- | --- |
-| 3-Way merge |  2개 이상 브랜치로 파생된 커밋 병합, 충돌 가능 |
+| Fast-Forward merge | 시간 흐름대로 커밋 내용 병합, 충돌 없이 100% auto-merge |
+| 3-Way merge |  2개 이상 브랜치로 파생된 커밋 병합, 같은 위치 수정 시 충돌 |
 | Rebase | 내가 수정중인 작업 빼고 다 master로 가져오는 거 |
 
 ```bash
@@ -225,7 +276,12 @@ git add -A
 git rebase --continue
 ```
 
-### reset
+Q. fast-forward VS 3-way 
+
+- branch에서 작업하는 동안 main/master에서 변경된 작업이 있었으면 3-way merge, 없으면 fast-forward
+
+
+### reset, revert
 
 - revert : commit 이력을 남기기 위해서, 소스코드는 돌아가지만 commit은 유지
 
@@ -236,12 +292,56 @@ git reset --hard HEAD~1  # hard: 소스 내용까지 다 돌아감
 git reset --mixed HEAD~1  # Work Directory까지 수정됨
 
 # revert
-git revert HEAD
+git revert HEAD  # commit 남기고 되돌리기
 
 # commit message 바꾸기
 git commit --amend -m 'xx'
 ```
 
+
+### tag
+
+- 배포 꼬리표, 특정 커밋 태깅
+- master → origin(remote repository) → WebServer
+    - master → origin 넘어갈 때 tag가 있음
+- tag: 0.0.0, 0.1.1 (출시버전.기능버전.버그수정버전)
+    - 0.1.0 가입, 0.2.0 로그인 - release 됐다
+- reset할 때 commit id 대신 tag 쓸 수 있음
+    - checkout 사용, 일종의 브랜치네?
+
+```bash
+git tag -a 0.1.0  # make tag
+git tag -l  # tag list
+
+git checkout 0.1.0  # 0.1.0으로 이동
+```
+
+
+## Git-Flow
+
+```bash
+git flow init
+git push origin --all
+git flow feature start <feature-branch>
+git flow feature list
+git add .
+git commit -m
+
+# push & pull-request
+git flow feature finish <feature-branch>
+git merge --no-ff develop # --no-ff: fast forward를 사용하지 않고 merge 커밋을 생성해서 merge 상황을 시각적으로 표현하기 위해 사용함
+git flow release start <tag>
+git flow release finish <tag>
+
+git tag -l
+git push origin --all --follow-tags
+git flow hotfix start <tag>
+git flow hotfix finish <tag>
+
+```
+
+## Fork & Pull-Request
+- ~ing
 
 
 ## Gitlab/Github/Bitbucket
