@@ -39,7 +39,7 @@ Q. stage와 repository의 차이?
 - 실수로 전송/충돌 방지
 - remote repository(git server) 때매, 공동작업
 - history가 중요하기 때문에 diff를 떠볼 수 있음
-
+   
 
 **Working Directory**
 
@@ -58,7 +58,7 @@ Q. stage와 repository의 차이?
 - **특정 버전**으로 남긴다 = **“커밋한다”**
 - Local Repository: 컴퓨터
 - Remote Repository: gitlab, github
-
+   
 |  | 코드 | 설명 | 추가설명/ 상태 |
 | --- | --- | --- | --- |
 |  | .git 파일 | 버전 관리에 필요한 모든 것이 들어있음 |  |
@@ -101,7 +101,7 @@ Q. stage와 repository의 차이?
     
     제어판> 자격 증명 관리> window 자격 증명> 일반 자격 증명> 지울 사이트 제거
     
-
+   
 ### Gitignore
 
 - git에 공개적으로 올라가지 말아야할 폴더/파일을 자동으로 커밋이 안되게 해주는 기능
@@ -124,7 +124,7 @@ Q. stage와 repository의 차이?
     
     </aside>
 
-
+   
 ### commit
 
 - 공간상/db에 저장
@@ -149,7 +149,7 @@ git diff HEAD~1  # 이전 커밋과의 차이
 git remote rm origin
 ```
 
-
+   
 ### restore(unstaged) VS rm(untracked)
 
 - restore: rollback, rm 취소
@@ -175,7 +175,7 @@ Q. remove VS clean
 - clean: untracked 된 애들을 지움
     - 안쓰는 파일이지만 남아있어야하면 gitignore를 사용해서 clean에서 제외
 
-
+   
 ### branch
 
 - default branch: 나무의 메인 줄기 = master = main
@@ -218,7 +218,7 @@ git fetch -p  # 다른 폴더에서는 fetch -p 해야 적용됨
 git branch --no-merged  # branch에서 commit 후 merge 필수
 ```
 
-
+   
 ### stash
 
 - 작업 중에 긴급 수정사항이 있을 때, commit 못할 때 stash에 임시 저장해둠
@@ -241,7 +241,7 @@ git stash apply stash@{0}  # label 상태로 복원
 git stash drop stash@{0}  # 특정 stash 삭제
 ```
 
-
+   
 ### git clean
 
 - untracked file 삭제
@@ -255,7 +255,7 @@ git clean -x  # ignore file도 삭제
 git clean -X  # ignore file만 삭제
 ```
 
-
+   
 ### merge
 
 | merge | 내용 |
@@ -281,7 +281,7 @@ Q. fast-forward VS 3-way
 
 - branch에서 작업하는 동안 main/master에서 변경된 작업이 있었으면 3-way merge, 없으면 fast-forward
 
-
+   
 ### reset, revert
 
 - revert : commit 이력을 남기기 위해서, 소스코드는 돌아가지만 commit은 유지
@@ -299,7 +299,7 @@ git revert HEAD  # commit 남기고 되돌리기
 git commit --amend -m 'xx'
 ```
 
-
+   
 ### tag
 
 - 배포 꼬리표, 특정 커밋 태깅
